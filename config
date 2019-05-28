@@ -85,4 +85,59 @@ color15 = #ffffff
 #border_width = 0.5
 #roundness = 2.0
 
+[bindings.cmd]
+#toggle_fullscreen = F11
+#toggle_visual_block = <Control>v
+#move_backward_blank_word = <Control>Left <Shift>b
+#move_forward_blank_word = <Control>Right <Shift>w
+#move_up_half_screen = <Control>u
+#move_down_half_screen = <Control>d
+#move_up_screen = <Control>b
+#move_down_screen = <Control>f
+#move_backward_word = <Shift>Left b
+#move_forward_word = <Shift>Right w
+#exit_command_mode = Escape q <Control>bracketleft
+#move_left = Left h
+#move_right = Right l
+#move_up = Up k
+#move_down = Down j
+#move_forward_end_word = e
+#move_forward_end_blank_word = <shift>e
+#move_to_start_of_line = Home 0
+#move_to_end_of_line = End dollar
+#move_first = asciicircum
+#move_to_first_row = g
+#move_to_last_row = <shift>g
+#move_to_top_row = <shift>h
+#move_to_middle_row = <shift>m
+#move_to_bottom_row = <shift>l
+#toggle_visual = v
+#toggle_visual_line = <shift>v
+#copy_clipboard = y
+#search = slash
+#search_reverse = question
+#find_next = n
+#find_previous = <shift>n
+#find_url = u
+#find_url_reverse = <shift>u
+#open_selection = o
+#confirm = Return
+#select_url = x
+#yank_clipboard = <Control>w
+
+[bindings.insert]
+# insert mode
+#toggle_fullscreen = F11
+#zoom_in = <Control>plus <Control>KP_Add
+#zoom_out = <Control>minus <Control>KP_Subtract
+#zoom_reset = <Control>equal
+#launch_in_directory = <Control><Shift>t
+#find_url_direct = <Control><Shift>x
+#copy_clipboard_direct = <Control><Shift>c
+#command_mode = <Control><Shift>space <Control><Shift>nobreakspace
+#paste_clipboard = <Control><Shift>v
+#reload_config = <Control><Shift>r
+#reset_terminal = <Control><Shift>l
+#complete = <Control>Tab
+
 # vim: ft=dosini cms=#%s
