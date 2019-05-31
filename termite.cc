@@ -886,14 +886,38 @@ gboolean key_press_cb(VteTerminal *vte, GdkEventKey *event, keybind_info *info) 
             case command_id::cmd_move_left:
                 move(vte, &info->select, -1, 0);
                 break;
+            case command_id::cmd_move_left5:
+                move(vte, &info->select, -5, 0);
+                break;
+            case command_id::cmd_move_left10:
+                move(vte, &info->select, -10, 0);
+                break;
             case command_id::cmd_move_down:
                 move(vte, &info->select, 0, 1);
+                break;
+            case command_id::cmd_move_down5:
+                move(vte, &info->select, 0, 5);
+                break;
+            case command_id::cmd_move_down10:
+                move(vte, &info->select, 0, 10);
+                break;
+            case command_id::cmd_move_up5:
+                move(vte, &info->select, 0, -5);
+                break;
+            case command_id::cmd_move_up10:
+                move(vte, &info->select, 0, -10);
                 break;
             case command_id::cmd_move_up:
                 move(vte, &info->select, 0, -1);
                 break;
             case command_id::cmd_move_right:
                 move(vte, &info->select, 1, 0);
+                break;
+            case command_id::cmd_move_right5:
+                move(vte, &info->select, 5, 0);
+                break;
+            case command_id::cmd_move_right10:
+                move(vte, &info->select, 10, 0);
                 break;
             case command_id::cmd_move_forward_end_word:
                 move_forward_end_word(vte, &info->select);
