@@ -858,132 +858,132 @@ gboolean key_press_cb(VteTerminal *vte, GdkEventKey *event, keybind_info *info) 
         switch (binding.cmd) {
             case command_id::none:
                 return TRUE;
-            case command_id::cmd_toggle_fullscreen:
+            case command_id::toggle_fullscreen:
                 info->fullscreen_toggle(info->window);
                 break;
-            case command_id::cmd_exit_command_mode:
+            case command_id::exit_command_mode:
                 exit_command_mode(vte, &info->select);
                 gtk_widget_hide(info->panel.da);
                 gtk_widget_hide(info->panel.entry);
                 info->panel.url_list.clear();
                 break;
-            case command_id::cmd_move_backward_blank_word:
+            case command_id::move_backward_blank_word:
                 move_backward_blank_word(vte, &info->select);
                 break;
-            case command_id::cmd_move_forward_blank_word:
+            case command_id::move_forward_blank_word:
                 move_forward_blank_word(vte, &info->select);
                 break;
-            case command_id::cmd_move_up_half_screen:
+            case command_id::move_up_half_screen:
                 move(vte, &info->select, 0, -(vte_terminal_get_row_count(vte) / 2));
                 break;
-            case command_id::cmd_move_down_half_screen:
+            case command_id::move_down_half_screen:
                 move(vte, &info->select, 0, vte_terminal_get_row_count(vte) / 2);
                 break;
-            case command_id::cmd_move_up_screen:
+            case command_id::move_up_screen:
                 move(vte, &info->select, 0, -(vte_terminal_get_row_count(vte) - 1));
                 break;
-            case command_id::cmd_move_down_screen:
+            case command_id::move_down_screen:
                 move(vte, &info->select, 0, vte_terminal_get_row_count(vte) - 1);
                 break;
-            case command_id::cmd_move_backward_word:
+            case command_id::move_backward_word:
                 move_backward_word(vte, &info->select);
                 break;
-            case command_id::cmd_move_forward_word:
+            case command_id::move_forward_word:
                 move_forward_word(vte, &info->select);
                 break;
-            case command_id::cmd_move_left:
+            case command_id::move_left:
                 move(vte, &info->select, -1, 0);
                 break;
-            case command_id::cmd_move_left5:
+            case command_id::move_left5:
                 move(vte, &info->select, -5, 0);
                 break;
-            case command_id::cmd_move_left10:
+            case command_id::move_left10:
                 move(vte, &info->select, -10, 0);
                 break;
-            case command_id::cmd_move_down:
+            case command_id::move_down:
                 move(vte, &info->select, 0, 1);
                 break;
-            case command_id::cmd_move_down5:
+            case command_id::move_down5:
                 move(vte, &info->select, 0, 5);
                 break;
-            case command_id::cmd_move_down10:
+            case command_id::move_down10:
                 move(vte, &info->select, 0, 10);
                 break;
-            case command_id::cmd_move_up5:
+            case command_id::move_up5:
                 move(vte, &info->select, 0, -5);
                 break;
-            case command_id::cmd_move_up10:
+            case command_id::move_up10:
                 move(vte, &info->select, 0, -10);
                 break;
-            case command_id::cmd_move_up:
+            case command_id::move_up:
                 move(vte, &info->select, 0, -1);
                 break;
-            case command_id::cmd_move_right:
+            case command_id::move_right:
                 move(vte, &info->select, 1, 0);
                 break;
-            case command_id::cmd_move_right5:
+            case command_id::move_right5:
                 move(vte, &info->select, 5, 0);
                 break;
-            case command_id::cmd_move_right10:
+            case command_id::move_right10:
                 move(vte, &info->select, 10, 0);
                 break;
-            case command_id::cmd_move_forward_end_word:
+            case command_id::move_forward_end_word:
                 move_forward_end_word(vte, &info->select);
                 break;
-            case command_id::cmd_move_forward_end_blank_word:
+            case command_id::move_forward_end_blank_word:
                 move_forward_end_blank_word(vte, &info->select);
                 break;
-            case command_id::cmd_move_to_start_of_line:
+            case command_id::move_to_start_of_line:
                 set_cursor_column(vte, &info->select, 0);
                 break;
-            case command_id::cmd_move_first:
+            case command_id::move_first:
                 set_cursor_column(vte, &info->select, 0);
                 move_first(vte, &info->select, std::not1(std::ref(g_unichar_isspace)));
                 break;
-            case command_id::cmd_move_to_end_of_line:
+            case command_id::move_to_end_of_line:
                 move_to_eol(vte, &info->select);
                 break;
-            case command_id::cmd_move_to_first_row:
+            case command_id::move_to_first_row:
                 move_to_row_start(vte, &info->select, first_row(vte));
                 break;
-            case command_id::cmd_move_to_last_row:
+            case command_id::move_to_last_row:
                 move_to_row_start(vte, &info->select, last_row(vte));
                 break;
-            case command_id::cmd_move_to_top_row:
+            case command_id::move_to_top_row:
                 move_to_row_start(vte, &info->select, top_row(vte));
                 break;
-            case command_id::cmd_move_to_middle_row:
+            case command_id::move_to_middle_row:
                 move_to_row_start(vte, &info->select, middle_row(vte));
                 break;
-            case command_id::cmd_move_to_bottom_row:
+            case command_id::move_to_bottom_row:
                 move_to_row_start(vte, &info->select, bottom_row(vte));
                 break;
-            case command_id::cmd_enter_visual:
+            case command_id::enter_visual:
                 enter_visual(vte, &info->select, vi_mode::visual);
                 break;
-            case command_id::cmd_enter_visual_line:
+            case command_id::enter_visual_line:
                 enter_visual(vte, &info->select, vi_mode::visual_line);
                 break;
-            case command_id::cmd_enter_visual_block:
+            case command_id::enter_visual_block:
                 enter_visual(vte, &info->select, vi_mode::visual_block);
                 break;
-            case command_id::cmd_toggle_visual:
+            case command_id::toggle_visual:
                 toggle_visual(vte, &info->select, vi_mode::visual);
                 break;
-            case command_id::cmd_toggle_visual_line:
+            case command_id::toggle_visual_line:
                 toggle_visual(vte, &info->select, vi_mode::visual_line);
                 break;
-            case command_id::cmd_toggle_visual_block:
+            case command_id::toggle_visual_block:
                 toggle_visual(vte, &info->select, vi_mode::visual_block);
                 break;
-            case command_id::cmd_copy_clipboard:
+            case command_id::copy_clipboard:
 #if VTE_CHECK_VERSION(0, 50, 0)
                 vte_terminal_copy_clipboard_format(vte, VTE_FORMAT_TEXT);
 #else
                 vte_terminal_copy_clipboard(vte);
 #endif
                 break;
-            case command_id::cmd_yank_clipboard:
+            case command_id::yank_clipboard:
 #if VTE_CHECK_VERSION(0, 50, 0)
                 vte_terminal_copy_clipboard_format(vte, VTE_FORMAT_TEXT);
 #else
@@ -991,34 +991,34 @@ gboolean key_press_cb(VteTerminal *vte, GdkEventKey *event, keybind_info *info) 
 #endif
                 exit_command_mode(vte, &info->select);
                 break;
-            case command_id::cmd_search:
+            case command_id::search:
                 overlay_show(&info->panel, overlay_mode::search, vte);
                 break;
-            case command_id::cmd_search_reverse:
+            case command_id::search_reverse:
                 overlay_show(&info->panel, overlay_mode::rsearch, vte);
                 break;
-            case command_id::cmd_find_next:
+            case command_id::find_next:
                 vte_terminal_search_find_next(vte);
                 vte_terminal_copy_primary(vte);
                 break;
-            case command_id::cmd_find_previous:
+            case command_id::find_previous:
                 vte_terminal_search_find_previous(vte);
                 vte_terminal_copy_primary(vte);
                 break;
-            case command_id::cmd_find_url:
+            case command_id::find_url:
                 search(vte, url_regex, false);
                 break;
-            case command_id::cmd_find_url_reverse:
+            case command_id::find_url_reverse:
                 search(vte, url_regex, true);
                 break;
-            case command_id::cmd_open_selection:
+            case command_id::open_selection:
                 open_selection(info->config.browser, vte);
                 break;
-            case command_id::cmd_confirm:
+            case command_id::confirm:
                 open_selection(info->config.browser, vte);
                 exit_command_mode(vte, &info->select);
                 break;
-            case command_id::cmd_select_url:
+            case command_id::select_url:
                 if (!info->config.browser)
                     break;
                 find_urls(vte, &info->panel);
@@ -1038,48 +1038,48 @@ gboolean key_press_cb(VteTerminal *vte, GdkEventKey *event, keybind_info *info) 
             return FALSE;
         case command_id::inject_chars:
             return modify_key_feed(info, binding.chars);
-        case command_id::insert_toggle_fullscreen:
+        case command_id::toggle_fullscreen:
             info->fullscreen_toggle(info->window);
             break;
-        case command_id::insert_zoom_in:
+        case command_id::zoom_in:
             increase_font_scale(vte);
             break;
-        case command_id::insert_zoom_out:
+        case command_id::zoom_out:
             decrease_font_scale(vte);
             break;
-        case command_id::insert_zoom_reset:
+        case command_id::zoom_reset:
             reset_font_scale(vte, info->config.font_scale);
             break;
-        case command_id::insert_launch_in_directory:
+        case command_id::launch_in_directory:
             launch_in_directory(vte);
             break;
-        case command_id::insert_command_mode:
+        case command_id::command_mode:
             enter_command_mode(vte, &info->select);
             break;
-        case command_id::insert_find_url_direct:
+        case command_id::find_url:
             enter_command_mode(vte, &info->select);
             find_urls(vte, &info->panel);
             gtk_widget_show(info->panel.da);
             overlay_show(&info->panel, overlay_mode::urlselect, nullptr);
             exit_command_mode(vte, &info->select);
             break;
-        case command_id::insert_copy_clipboard_direct:
+        case command_id::copy_clipboard:
 #if VTE_CHECK_VERSION(0, 50, 0)
             vte_terminal_copy_clipboard_format(vte, VTE_FORMAT_TEXT);
 #else
             vte_terminal_copy_clipboard(vte);
 #endif
             break;
-        case command_id::insert_paste_clipboard:
+        case command_id::paste_clipboard:
             vte_terminal_paste_clipboard(vte);
             break;
-        case command_id::insert_reload_config:
+        case command_id::reload_config:
             reload_config();
             break;
-        case command_id::insert_reset_terminal:
+        case command_id::reset_terminal:
             vte_terminal_reset(vte, TRUE, TRUE);
             break;
-        case command_id::insert_complete:
+        case command_id::complete:
             overlay_show(&info->panel, overlay_mode::completion, vte);
             break;
         default:
