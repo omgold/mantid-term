@@ -983,6 +983,14 @@ gboolean key_press_cb(VteTerminal *vte, GdkEventKey *event, keybind_info *info) 
                 vte_terminal_copy_clipboard(vte);
 #endif
                 break;
+            case command_id::cmd_yank_clipboard:
+#if VTE_CHECK_VERSION(0, 50, 0)
+                vte_terminal_copy_clipboard_format(vte, VTE_FORMAT_TEXT);
+#else
+                vte_terminal_copy_clipboard(vte);
+#endif
+                exit_command_mode(vte, &info->select);
+                break;
             case command_id::cmd_search:
                 overlay_show(&info->panel, overlay_mode::search, vte);
                 break;
