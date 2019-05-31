@@ -522,6 +522,14 @@ static void exit_command_mode(VteTerminal *vte, select_info *select) {
     select->mode = vi_mode::insert;
 }
 
+static void enter_visual(VteTerminal *vte, select_info *select, vi_mode mode) {
+    if (select->mode == vi_mode::command) {
+        vte_terminal_get_cursor_position(vte, &select->begin_col, &select->begin_row);
+    }
+    select->mode = mode;
+    update_selection(vte, select);
+}
+
 static void toggle_visual(VteTerminal *vte, select_info *select, vi_mode mode) {
     if (select->mode == mode) {
         select->mode = vi_mode::command;
@@ -949,6 +957,15 @@ gboolean key_press_cb(VteTerminal *vte, GdkEventKey *event, keybind_info *info) 
                 break;
             case command_id::cmd_move_to_bottom_row:
                 move_to_row_start(vte, &info->select, bottom_row(vte));
+                break;
+            case command_id::cmd_enter_visual:
+                enter_visual(vte, &info->select, vi_mode::visual);
+                break;
+            case command_id::cmd_enter_visual_line:
+                enter_visual(vte, &info->select, vi_mode::visual_line);
+                break;
+            case command_id::cmd_enter_visual_block:
+                enter_visual(vte, &info->select, vi_mode::visual_block);
                 break;
             case command_id::cmd_toggle_visual:
                 toggle_visual(vte, &info->select, vi_mode::visual);
