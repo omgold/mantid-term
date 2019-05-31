@@ -1496,14 +1496,17 @@ static void set_keybindings(keybinding_set* bindings, std::map<accelerator,keybi
         auto binding_str = *binding;
         // split on spaces
         size_t s=0;
-        for(size_t i=0; binding_str[i]!=0; i++) {
+        size_t i;
+        for(i=0; binding_str[i]!=0; i++) {
             if(binding_str[i]==' ') {
                 binding_str[i]=0;
-                bind_key(bindings,binding_str+s,iter->second);
+                if (s!=i)
+                    bind_key(bindings,binding_str+s,iter->second);
                 s=i+1;
             }
         }
-        bind_key(bindings,binding_str+s,iter->second);
+        if (s!=i)
+            bind_key(bindings,binding_str+s,iter->second);
     }
 }
 
