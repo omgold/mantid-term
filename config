@@ -22,6 +22,9 @@ scrollback_lines = 10000
 # $BROWSER is used by default if set, with xdg-open as a fallback
 #browser = xdg-open
 
+# value TERM environment variable
+#term = xterm-termite
+
 # "system", "on" or "off"
 #cursor_blink = system
 
