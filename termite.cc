@@ -1417,8 +1417,11 @@ static void load_theme(GtkWindow *window, VteTerminal *vte, GKeyFile *config, hi
 static void bind_key(keybinding_set* bindings, char* key_name, command_id command) {
     accelerator a = key_name;
     auto iter = bindings->bindings.find(a);
-    if (iter != bindings->bindings.end())
+    if (a.keyval == 0)
+        return;
+    if (iter != bindings->bindings.end()) {
         g_printerr("duplicate accelerator binding of '%s'\n", key_name);
+    }
     bindings->bindings[a] = { command, NULL };
 }
 
