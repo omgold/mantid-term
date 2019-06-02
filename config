@@ -148,6 +148,7 @@ color15 = #ffffff
 #confirm = Return
 #select_url = x
 #yank_clipboard = <Control>w
+#reload_config = <Control><Shift>r
 
 [bindings.insert]
 # insert mode

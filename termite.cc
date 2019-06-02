@@ -1063,6 +1063,9 @@ gboolean key_press_cb(VteTerminal *vte, GdkEventKey *event, keybind_info *info) 
                 gtk_widget_show(info->panel.da);
                 overlay_show(&info->panel, overlay_mode::urlselect, nullptr);
                 break;
+            case command_id::reload_config:
+                reload_config();
+                break;
             default:
                 break;
         }
