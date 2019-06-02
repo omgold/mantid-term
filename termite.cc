@@ -134,6 +134,7 @@ struct accelerator {
     accelerator(guint init_keyval, GdkModifierType init_modifiers) : keyval(init_keyval), modifiers(init_modifiers) {
     }
     accelerator(const gchar* name) {
+        this->keyval = 0;
         gtk_accelerator_parse(name, &this->keyval, &this->modifiers);
         if (this->keyval == 0)
             g_printerr("key binding accelerator invalid: %s\n", name);
@@ -662,7 +663,7 @@ static void move_backward(VteTerminal *vte, select_info *select, F is_word) {
 
     bool in_word = false;
 
-    for (long i = length - 2; i >= 0; i--) {
+    for (long i = length; i >= 0; i--) {
         cursor_col--;
         if (!is_word(codepoints[i - 1])) {
             if (in_word) {
@@ -672,7 +673,7 @@ static void move_backward(VteTerminal *vte, select_info *select, F is_word) {
             in_word = true;
         }
     }
-    vte_terminal_set_cursor_position(vte, cursor_col-1, cursor_row);
+    vte_terminal_set_cursor_position(vte, cursor_col+1, cursor_row);
     update_selection(vte, select);
 
     g_free(codepoints);
