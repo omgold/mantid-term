@@ -583,6 +583,12 @@ static void update_scroll(VteTerminal *vte) {
     }
 }
 
+static void scroll(VteTerminal *vte, long rows) {
+    GtkAdjustment *adjust = gtk_scrollable_get_vadjustment(GTK_SCROLLABLE(vte));
+    const double current_row = gtk_adjustment_get_value(adjust);
+    gtk_adjustment_set_value(adjust, current_row+double(rows));
+}
+
 static void move(VteTerminal *vte, select_info *select, long col, long row) {
     const long end_col = vte_terminal_get_column_count(vte) - 1;
 
@@ -958,6 +964,36 @@ gboolean key_press_cb(VteTerminal *vte, GdkEventKey *event, keybind_info *info) 
             case command_id::move_to_bottom_row:
                 move_to_row_start(vte, &info->select, bottom_row(vte));
                 break;
+            case command_id::scroll_up_screen:
+                scroll(vte, -vte_terminal_get_row_count(vte));
+                break;
+            case command_id::scroll_up_half_screen:
+                scroll(vte, -(vte_terminal_get_row_count(vte) / 2));
+                break;
+            case command_id::scroll_up:
+                scroll(vte, -1);
+                break;
+            case command_id::scroll_up5:
+                scroll(vte, -5);
+                break;
+            case command_id::scroll_up10:
+                scroll(vte, -10);
+                break;
+            case command_id::scroll_down_screen:
+                scroll(vte, vte_terminal_get_row_count(vte));
+                break;
+            case command_id::scroll_down_half_screen:
+                scroll(vte, (vte_terminal_get_row_count(vte) / 2));
+                break;
+            case command_id::scroll_down:
+                scroll(vte, 1);
+                break;
+            case command_id::scroll_down5:
+                scroll(vte, 5);
+                break;
+            case command_id::scroll_down10:
+                scroll(vte, 10);
+                break;
             case command_id::enter_visual:
                 enter_visual(vte, &info->select, vi_mode::visual);
                 break;
@@ -1081,6 +1117,36 @@ gboolean key_press_cb(VteTerminal *vte, GdkEventKey *event, keybind_info *info) 
             break;
         case command_id::complete:
             overlay_show(&info->panel, overlay_mode::completion, vte);
+            break;
+        case command_id::scroll_up_screen:
+            scroll(vte, -vte_terminal_get_row_count(vte));
+            break;
+        case command_id::scroll_up_half_screen:
+            scroll(vte, -(vte_terminal_get_row_count(vte) / 2));
+            break;
+        case command_id::scroll_up:
+            scroll(vte, -1);
+            break;
+        case command_id::scroll_up5:
+            scroll(vte, -5);
+            break;
+        case command_id::scroll_up10:
+            scroll(vte, -10);
+            break;
+        case command_id::scroll_down_screen:
+            scroll(vte, vte_terminal_get_row_count(vte));
+            break;
+        case command_id::scroll_down_half_screen:
+            scroll(vte, (vte_terminal_get_row_count(vte) / 2));
+            break;
+        case command_id::scroll_down:
+            scroll(vte, 1);
+            break;
+        case command_id::scroll_down5:
+            scroll(vte, 5);
+            break;
+        case command_id::scroll_down10:
+            scroll(vte, 10);
             break;
         default:
             return FALSE;
