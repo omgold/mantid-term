@@ -720,7 +720,7 @@ static void move_to_eol(VteTerminal *vte, select_info *select) {
     long cursor_row;
     vte_terminal_get_cursor_position(vte, nullptr, &cursor_row);
 
-    const long end_col = vte_terminal_get_column_count(vte) - 1;
+    const long end_col = vte_terminal_get_column_count(vte);
 
     auto content = get_text_range(vte, cursor_row, 0, cursor_row, end_col);
 
