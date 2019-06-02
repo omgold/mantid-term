@@ -863,7 +863,7 @@ gboolean key_press_cb(VteTerminal *vte, GdkEventKey *event, keybind_info *info) 
 
         switch (binding.cmd) {
             case command_id::none:
-                return TRUE;
+                break;
             case command_id::toggle_fullscreen:
                 info->fullscreen_toggle(info->window);
                 break;
