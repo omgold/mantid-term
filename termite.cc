@@ -512,9 +512,7 @@ static void exit_command_mode(VteTerminal *vte, select_info *select) {
 }
 
 static void enter_visual(VteTerminal *vte, select_info *select, vi_mode mode) {
-    if (select->mode == vi_mode::command) {
-        vte_terminal_get_cursor_position(vte, &select->begin_col, &select->begin_row);
-    }
+    vte_terminal_get_cursor_position(vte, &select->begin_col, &select->begin_row);
     select->mode = mode;
     update_selection(vte, select);
 }
