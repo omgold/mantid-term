@@ -743,7 +743,7 @@ static void move_to_eol(VteTerminal *vte, select_info *select) {
     }
 
     auto iter = std::find(codepoints, codepoints + length, '\n');
-    set_cursor_column(vte, select, std::max(iter - codepoints - 1l, 0l));
+    set_cursor_column(vte, select, std::max(iter - codepoints, 0l));
 
     g_free(codepoints);
 }
@@ -753,7 +753,7 @@ static void move_forward(VteTerminal *vte, select_info *select, F is_word, bool 
     long cursor_col, cursor_row;
     vte_terminal_get_cursor_position(vte, &cursor_col, &cursor_row);
 
-    const long end_col = vte_terminal_get_column_count(vte) - 1;
+    const long end_col = vte_terminal_get_column_count(vte);
 
     auto content = get_text_range(vte, cursor_row, cursor_col, cursor_row, end_col);
 
@@ -776,7 +776,7 @@ static void move_forward(VteTerminal *vte, select_info *select, F is_word, bool 
     bool end_of_word = false;
 
     if (!goto_word_end) {
-        for (long i = 1; i < length; i++) {
+        for (long i = 1; i <= length; i++) {
             if (is_word(codepoints[i - 1])) {
                 if (end_of_word) {
                     break;
@@ -787,13 +787,12 @@ static void move_forward(VteTerminal *vte, select_info *select, F is_word, bool 
             cursor_col++;
         }
     } else {
-        for (long i = 2; i <= length; i++) {
+        for (long i = 1; i <= length; i++) {
             cursor_col++;
             if (is_word(codepoints[i - 1]) && !is_word(codepoints[i])) {
                 break;
             }
         }
-        cursor_col++;
     }
     vte_terminal_set_cursor_position(vte, cursor_col, cursor_row);
     update_selection(vte, select);
