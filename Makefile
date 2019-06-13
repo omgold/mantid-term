@@ -44,10 +44,7 @@ install: termite termite.desktop
 	install -Dm644 man/termite.1 ${DESTDIR}${MANDIR}/man1/termite.1
 	install -Dm644 man/termite.config.5 ${DESTDIR}${MANDIR}/man5/termite.config.5
 
-uninstall:
-	rm -f ${DESTDIR}${BINDIR}/termite
-
 clean:
 	rm termite
 
-.PHONY: clean install uninstall
+.PHONY: clean install
