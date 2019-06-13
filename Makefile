@@ -19,7 +19,7 @@ CXXFLAGS := -std=c++11 -O3 \
 	    -Wwrite-strings \
 	    -DNDEBUG \
 	    -D_POSIX_C_SOURCE=200809L \
-	    -DTERMITE_VERSION=\"${VERSION}\" \
+	    -DMANTID_VERSION=\"${VERSION}\" \
 	    ${shell pkg-config --cflags ${GTK} ${VTE}} \
 	    ${CXXFLAGS}
 
@@ -34,17 +34,17 @@ endif
 LDFLAGS := -s -Wl,--as-needed ${LDFLAGS}
 LDLIBS := ${shell pkg-config --libs ${GTK} ${VTE}}
 
-termite: termite.cc url_regex.hh util/clamp.hh util/maybe.hh util/memory.hh keybindings.hh keybindings_insert.hh keybindings_cmd.hh
+mantid: mantid.cc url_regex.hh util/clamp.hh util/maybe.hh util/memory.hh keybindings.hh keybindings_insert.hh keybindings_cmd.hh
 	${CXX} ${CXXFLAGS} ${LDFLAGS} $< ${LDLIBS} -o $@
 
-install: termite termite.desktop
-	install -Dm755 termite ${DESTDIR}${BINDIR}/termite
-	install -Dm644 config ${DESTDIR}/etc/xdg/termite/config
-	install -Dm644 termite.desktop ${DESTDIR}${DATADIR}/applications/termite.desktop
-	install -Dm644 man/termite.1 ${DESTDIR}${MANDIR}/man1/termite.1
-	install -Dm644 man/termite.config.5 ${DESTDIR}${MANDIR}/man5/termite.config.5
+install: mantid mantid.desktop
+	install -Dm755 mantid ${DESTDIR}${BINDIR}/mantid
+	install -Dm644 config ${DESTDIR}/etc/xdg/mantid/config
+	install -Dm644 mantid.desktop ${DESTDIR}${DATADIR}/applications/mantid.desktop
+	install -Dm644 man/mantid.1 ${DESTDIR}${MANDIR}/man1/mantid.1
+	install -Dm644 man/mantid.config.5 ${DESTDIR}${MANDIR}/man5/mantid.config.5
 
 clean:
-	rm termite
+	rm mantid
 
 .PHONY: clean install

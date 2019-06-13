@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=Termite
+Name=Mantid Terminal
 Comment=Use the command line
-Exec=termite
+Exec=mantid
 Icon=utilities-terminal
 Type=Application
 Categories=GTK;System;TerminalEmulator;

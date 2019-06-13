@@ -1,11 +1,12 @@
-A keyboard-centric VTE-based terminal, aimed at use within a window manager
-with tiling and/or tabbing support.
+A fully keyboard-controllable VTE-based terminal,
+based on Termite, with added features like multiple tabs
+and customizable keybindings.
 
-Termite looks for the configuration file in the following order:
-``$XDG_CONFIG_HOME/termite/config``, ``~/.config/termite/config``,
-``$XDG_CONFIG_DIRS/termite/config``, ``/etc/xdg/termite/config``.
+Mantid looks for the configuration file in the following order:
+``$XDG_CONFIG_HOME/mantid/config``, ``~/.config/mantid/config``,
+``$XDG_CONFIG_DIRS/mantid/config``, ``/etc/xdg/mantid/config``.
 
-Termite's exit status is 1 on a failure, including a termination of the child
+Mantid's exit status is 1 on a failure, including a termination of the child
 process from an uncaught signal. Otherwise the exit status is that of the child
 process.
 
@@ -27,8 +28,8 @@ BUILDING
 ========
 ::
 
-    git clone --recursive https://github.com/thestinger/termite.git
-    cd termite && make
+    git clone --recursive https://github.com/omgold/mantid-term.git
+    cd mantid-term && make
 
 KEYBINDINGS
 ===========
@@ -77,7 +78,7 @@ INSERT MODE
 
        .. code:: sh
 
-            if [[ $TERM == xterm-termite ]]; then
+            if [[ -n "$VTE_VERSION" ]]; then
               . /etc/profile.d/vte.sh
               __vte_osc7
             fi
@@ -87,7 +88,7 @@ INSERT MODE
 
        .. code:: sh
 
-            if [[ $TERM == xterm-termite ]]; then
+            if [[ -n "$VTE_VERSION" ]]; then
               . /etc/profile.d/vte.sh
               __vte_prompt_command
             fi
@@ -169,19 +170,19 @@ and copied to the PRIMARY clipboard buffer.
 With the text input widget focused, up/down (or tab/shift-tab) cycle through
 completions, escape closes the widget and enter accepts the input.
 
-In hints mode, the input will be accepted as soon as termite considers it a
+In hints mode, the input will be accepted as soon as Mantid considers it a
 unique match.
 
 PADDING
 =======
 
-Internal padding can be added by using CSS to style Termite. Adding
+Internal padding can be added by using CSS to style Mantid. Adding
 the following snippet to ``$XDG_CONFIG_HOME/gtk-3.0/gtk.css`` (or
 ``~/.config/gtk-3.0/gtk.css``) will add uniform 2px padding around the edges:
 
 .. code:: css
 
-    .termite {
+    .mantid {
         padding: 2px;
     }
 

@@ -319,7 +319,7 @@ static void launch_in_directory(VteTerminal *vte) {
         return;
     }
     auto dir = make_unique(g_filename_from_uri(uri, nullptr, nullptr), g_free);
-    char term[] = "termite"; // maybe this should be argv[0]
+    char term[] = "mantid"; // maybe this should be argv[0]
     char *cmd[] = {term, nullptr};
     g_spawn_async(dir.get(), cmd, nullptr, G_SPAWN_SEARCH_PATH, nullptr, nullptr, nullptr, nullptr);
 }
@@ -806,7 +806,7 @@ static void move_forward_blank_word(VteTerminal *vte, select_info *select) {
 void window_title_cb(VteTerminal *vte, gboolean *dynamic_title) {
     const char *const title = *dynamic_title ? vte_terminal_get_window_title(vte) : nullptr;
     gtk_window_set_title(GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(vte))),
-                         title ? title : "termite");
+                         title ? title : "Mantid Terminal");
 }
 
 static void reset_font_scale(VteTerminal *vte, gdouble scale) {
@@ -1532,7 +1532,7 @@ static void load_config(GtkWindow *window, VteTerminal *vte, GtkWidget *scrollba
                         GtkWidget *hbox, keybind_info *keybind_info, char **icon,
                         bool *show_scrollbar) {
     config_info* info = &keybind_info->config;
-    const std::string default_path = "/termite/config";
+    const std::string default_path = "/mantid/config";
     GKeyFile *config = g_key_file_new();
     GError *error = nullptr;
 
@@ -1663,7 +1663,7 @@ static void set_config(GtkWindow *window, VteTerminal *vte, GtkWidget *scrollbar
     if (auto s = get_config_string(config, "options", "term")) {
         info->term = *s;
     } else {
-        info->term = "xterm-termite";
+        info->term = "xterm-256color";
     }
 
     if (info->clickable_url) {
@@ -1815,7 +1815,7 @@ int main(int argc, char **argv) {
     g_option_context_free(context);
 
     if (version) {
-        g_print("termite %s\n", TERMITE_VERSION);
+        g_print("mantid %s\n", MANTID_VERSION);
         return EXIT_SUCCESS;
     }
 
@@ -1836,7 +1836,7 @@ int main(int argc, char **argv) {
     VteTerminal *vte = VTE_TERMINAL(vte_widget);
 
     GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_style_context_add_class(gtk_widget_get_style_context(hbox),"termite");
+    gtk_style_context_add_class(gtk_widget_get_style_context(hbox),"mantid");
     GtkWidget *scrollbar = gtk_scrollbar_new(GTK_ORIENTATION_VERTICAL, gtk_scrollable_get_vadjustment(GTK_SCROLLABLE(vte_widget)));
     gtk_box_pack_start(GTK_BOX(hbox), hint_overlay, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(hbox), scrollbar, FALSE, FALSE, 0);

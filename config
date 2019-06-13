@@ -23,7 +23,7 @@ scrollback_lines = 10000
 #browser = xdg-open
 
 # value TERM environment variable
-#term = xterm-termite
+#term = xterm-256color
 
 # "system", "on" or "off"
 #cursor_blink = system

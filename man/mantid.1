@@ -1,12 +1,12 @@
-.TH termite 1 "2013-03-26" "termite" "User Commands"
+.TH mantid 1 "2019-006-15" "mantid" "User Commands"
 .SH NAME
-termite \- A keyboard-centric VTE-based terminal aimed for use with
-a tiling and/or tabbing enabled window manager.
+mantid \- A fully keyboard-controllable VTE-based terminal,
+based on Termite, with added features like multiple tabs
+and customizable keybindings.
 .SH SYNOPSIS
-\fBtermite\fP [options]
+\fBmantid\fP [options]
 .SH DESCRIPTION
-\fBtermite\fP is a GTK-based terminal emulator intended for use within
-window managers with tiling and/or tabbing support. It provides a fast
+\fBmantid\fP is a GTK-based terminal emulator using VTE. It provides a fast
 terminal experience and pleasant array of keyboard-centric features.
 .SH OPTIONS
 .PP
@@ -15,18 +15,18 @@ Display help message.
 .IP "\fB\-v\fR, \fB\-\-version\fR"
 Display version information.
 .IP "\fB\-e\fR, \fB\-\-exec\fR\fB=\fR\fICOMMAND\fR"
-Tell termite start \fICOMMAND\fP instead of the shell.
+Tell mantid to start \fICOMMAND\fP instead of the shell.
 .IP "\fB\-r\fR, \fB\-\-role\fR\fB=\fR\fIROLE\fR"
-The role to set the termite window to report itself with.
+The role to set the mantid window to report itself with.
 .IP "\fB\-t\fR, \fB\-\-title\fR\fB=\fR\fITITLE\fR"
-Set the termite window's title to \fITITLE\fP. This disables dynamic
+Set the mantid window's title to \fITITLE\fP. This disables dynamic
 titles.
 .IP "\fB\-d\fR, \fB\-\-directory\fR\fB=\fR\fIDIRECTORY\fR"
-Tell termite to change to \fIDIRECTORY\fP when launching.
+Tell mantid to change to \fIDIRECTORY\fP when launching.
 .IP "\fB\-\-icon\fR\f8=\fR\fIICON\fR"
 Override the window icon name.
 .IP "\fB\-\-hold\fR"
-Keep termite open after the child process exits.
+Keep mantid open after the child process exits.
 .IP "\fB\-\-display\fR\fB=\fR\fIDISPLAY\fR"
 Launch on \fIDISPLAY\fP X display.
 .IP "\fB\-c\fR, \fB\-\-config\fR\fB=\fR\fICONFIG\fR"
@@ -43,7 +43,7 @@ Set the windows class part of the \fIWM_CLASS\fR property.
 .SS Insert Mode
 \fBInsert Mode\fP is the default mode common to most terminal emulators.
 This is where you enter commands and interact with the programs running
-within \fBtermite\fP.
+within \fBmantid\fP.
 .PP
 .IP "\fBctrl-shift-x\fP"
 activate url hints mode
@@ -80,7 +80,7 @@ decrease font size
 .IP "\fBctrl-=\fP"
 reset font size to default
 .SS Selection Mode
-In \fBSelection Mode\fP you interact with the interface of \fBtermite\fP
+In \fBSelection Mode\fP you interact with the interface of \fBmantid\fP
 and the visual representation of the programs running within it. You can
 search, mark and copy contents from the display for use in other
 programs.
@@ -156,12 +156,12 @@ The
 \fBHints Mode\fP is meant for accessing urls outputted to the terminal.
 When active, links can be launched with a few keypresses.
 .SH FILES
-\fBtermite\fP looks for the configuration file in the following order:
-\fI"$XDG_CONFIG_HOME/termite/config"\fP,
-\fI"~/.config/termite/config"\fP,
-\fI"$XDG_CONFIG_DIRS/termite/config"\fP and \fI"/etc/xdg/termite/config"
+\fBmantid\fP looks for the configuration file in the following order:
+\fI"$XDG_CONFIG_HOME/mantid/config"\fP,
+\fI"~/.config/mantid/config"\fP,
+\fI"$XDG_CONFIG_DIRS/mantid/config"\fP and \fI"/etc/xdg/mantid/config"
 .SH EXIT STATUS
-\fBtermite\fP returns \fI1\fR on failure, including a termination of the
+\fBmantid\fP returns \fI1\fR on failure, including a termination of the
 child process from an uncaught signal. Otherwise the status is that of
 the child process.
 .SH REMARKS
@@ -172,14 +172,14 @@ With the text input widget focused, up/down (or tab/shift-tab) cycle
 through completions, escape closes the widget and enter accepts the
 input.
 .P
-In hints mode, the input will be accepted as soon as termite considers
+In hints mode, the input will be accepted as soon as mantid considers
 it a unique match.
 .SS Current Directory
 The directory can be set by a process running in the terminal. For
 example, with \fRzsh\fP:
 .IP
 .nf
-if [[ $TERM == xterm-termite ]]; then
+if [[ -n "$VTE_VERSION" ]]; then
   . /etc/profile.d/vte.sh
   __vte_osc7
 fi
@@ -188,7 +188,7 @@ fi
 or for example, with \fRbash\fP:
 .IP
 .nf
-if [[ $TERM == xterm-termite ]]; then
+if [[ -n "$VTE_VERSION" ]]; then
   . /etc/profile.d/vte.sh
   __vte_prompt_command
 fi
@@ -196,4 +196,4 @@ fi
 .PP
 
 .SH SEE ALSO
-man termite.config(5)
+man mantid.config(5)
