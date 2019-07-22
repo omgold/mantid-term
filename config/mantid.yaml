@@ -1,0 +1,54 @@
+startup:
+    rows: 30
+    columns: 100
+    show-scrollbar: true
+    font-scale: 1
+    # shell: [/bin/bash]
+
+appearance:
+    font: DejaVu Sans Mono Book 9
+    colors:
+        foreground: black
+        #foreground-bold: gray
+        background: white
+        cursor: '#dcdccc'
+        cursor-foreground: red
+        highlight: '#f0e0d0'
+        highlight-foreground: green
+        0: '#000000'
+        1: '#880000'
+        2: '#006600'
+        3: '#503000'
+        4: '#000077'
+        5: '#600060'
+        6: '#005555'
+        7: '#d0d0d0'
+        8: '#555555'
+        9: '#ffaaaa'
+        10: '#88ff88'
+        11: '#ffff55'
+        12: '#b4baf0'
+        13: '#ffbbff'
+        14: '#aaffff'
+        15: '#ffffff'
+
+keybindings:
+    global:
+        <Ctrl>equal: {action: zoom, set: 1}
+        <Ctrl>plus: {action: zoom, change: 0.1}
+        <Ctrl>minus: {action: zoom, change: -0.1}
+    normal:
+        <Control>dead_circumflex: enter-command-mode
+        <Control>asciicircum: enter-command-mode
+        <Ctrl>1: {action: inject-keys, chars: !!binary abc=}
+        <Alt>v: {action: paste-selection, src: primary}
+    command:
+        Escape: leave-command-mode
+        Up: {action: move,y: -1}
+        Down: {action: move,y: 1}
+        Left: {action: move, x: -1}
+        Right: {action: move, x: 1}
+        <Ctrl>space: start-select
+        <Alt>space: {action: start-select, mode: block}
+        <Ctrl>w: yank-selection
+        <Alt>w: {action: yank-selection,leave_command: true}
