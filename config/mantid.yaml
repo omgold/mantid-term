@@ -39,6 +39,7 @@ keybindings:
         <Ctrl>minus: {action: zoom, change: -0.1}
         <Shift>Page_Up: {action: scroll, screen: -0.5}
         <Shift>Page_Down: {action: scroll, screen: 0.5}
+        F11: {action: fullscreen, set: null, toggle: true}
     normal:
         <Control>dead_circumflex: enter-command-mode
         <Control>asciicircum: enter-command-mode
