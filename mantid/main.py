@@ -407,11 +407,26 @@ def action_zoom(terminal, set=None, change=0):
     app.set_font_scale(scale)
 
 
+def action_fullscreen(terminal, set=None, toggle=False):
+    if set is not None:
+        if set:
+            app.is_fullscreen = True
+        else:
+            app.is_fullscreen = False
+    if toggle:
+        app.is_fullscreen = not app.is_fullscreen
+    if app.is_fullscreen:
+        app.window.fullscreen()
+    else:
+        app.window.unfullscreen()
+
+
 actions = {
     "global": {
         "yank-selection": action_yank_selection,
         "zoom": action_zoom,
         "scroll": action_scroll,
+        "fullscreen": action_fullscreen,
     },
     "normal": {
         "enter-command-mode": action_enter_command_mode,
@@ -473,7 +488,7 @@ class App:
 
         fullscreen = self.args.fullscreen or startup["fullscreen"]
         if fullscreen:
-            self.window.fullscreen()
+            action_fullscreen(None, set=fullscreen)
 
         self.apply_config()
 
