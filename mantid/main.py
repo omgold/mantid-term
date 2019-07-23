@@ -22,6 +22,13 @@ def introspect(obj):
     print(cleaned_obj)
 
 
+def get_key_name(keyval, modifiers):
+    label = Gtk.accelerator_name(keyval, modifiers)
+    check_keyval, check_modifiers = Gtk.accelerator_parse(label)
+    if check_keyval == keyval and check_modifiers == modifiers:
+        return label
+
+
 def child_exited_cb(vte, status, terminal):
     app.terminals.remove(terminal)
     if len(app.terminals) == 0:
@@ -38,7 +45,8 @@ def key_press_cb(vte, key, terminal):
 
     command_mode = terminal.command_mode
     if command_mode:
-        action = app.find_keybinding(app.keybindings_command, key)
+        action = app.find_keybinding(app.keybindings_command, key,
+                                     debug_print=app.print_accelerators)
     else:
         action = app.find_keybinding(app.keybindings_normal, key)
 
@@ -412,6 +420,7 @@ class App:
         parser.add_argument('-f', '--fullscreen', help='start in fullscreen mode', action="store_true")
         parser.add_argument('-c', '--config', help='config file', default=os.environ.get("HOME","")+"/.config/mantid.yaml")
         parser.add_argument('-i', '--icon', help='window icon')
+        parser.add_argument('-a', '--print-accelerators', help='print key accelerator names in command mode', action="store_true")
 
         self.args = parser.parse_args()
         self.load_config()
@@ -433,6 +442,8 @@ class App:
         self.window.connect("window-state-event", window_state_cb)
 
         alpha_screen_changed_cb(self.window)
+
+        self.print_accelerators = self.args.print_accelerators
 
         startup = self.config["startup"]
 
@@ -606,7 +617,7 @@ class App:
         self.window.add(terminal.panel_overlay)
 
 
-    def find_keybinding(self, binding_map, event):
+    def find_keybinding(self, binding_map, event, debug_print=False):
         display = app.window.get_window().get_display()
         keymap = Gdk.Keymap.get_for_display(display)
         intent_default_mod_mask = keymap.get_modifier_mask(Gdk.ModifierIntent.DEFAULT_MOD_MASK)
@@ -622,8 +633,15 @@ class App:
         result_keyval = t.keyval
         result_modifiers = modifiers & intent_default_mod_mask
         result_modifiers &= Gdk.ModifierType(~consumed_modifiers)
+
+        if debug_print:
+            label1 = get_key_name(result_keyval, result_modifiers)
+
         action = binding_map.get((result_keyval, result_modifiers))
         if action is not None:
+            if debug_print:
+                if label1 is not None:
+                    print( "key '%s' pressed" % label1, file=sys.stderr)
             return action
         #print("n",result_keyval, result_modifiers)
 
@@ -637,10 +655,26 @@ class App:
             #result_modifiers = modifiers
             #result_modifiers &= intent_default_mod_mask | Gdk.ModifierType(~consumed_modifiers)
             #print("e",result_keyval, result_modifiers)
+
+            if debug_print:
+                label2 = get_key_name(result_keyval, result_modifiers)
+                if label1 == label2:
+                    label2 = None
+                if label1 is None:
+                    label1 = label2
+                    label2 = None
+                if label1 is not None:
+                    if label2 is None:
+                        print( "key '%s' pressed" % label1, file=sys.stderr)
+                    else:
+                        print( "key '%s' aka '%s' pressed" % (label1,label2), file=sys.stderr)
             action = binding_map.get((result_keyval, result_modifiers))
             if action is not None:
                 return action
 
+        else:
+            if debug_print:
+                print( "key '%s' pressed" % label1, file=sys.stderr)
 
 #introspect(Gio.Cancellable)
 
