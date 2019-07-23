@@ -325,7 +325,7 @@ def action_inject_keys(terminal, chars):
     terminal.vte.feed_child_binary(chars)
 
 
-def action_move(terminal, x=0, y=0):
+def action_move(terminal, x=0, y=0, screen=0, row=None):
 
     vte = terminal.vte
 
@@ -334,8 +334,15 @@ def action_move(terminal, x=0, y=0):
     adjustment = vte.get_vadjustment()
     mode = vte.get_cursor_blink_mode()
     vte.set_cursor_blink_mode(Vte.CursorBlinkMode.OFF)
-    dest_x = min(max(cursor_col+x, 0), end_col)
-    dest_y = min(max(cursor_row+y,adjustment.get_lower()),adjustment.get_upper()-1)
+    if row is not None:
+        base_x = vte.get_column_count() * row
+    else:
+        base_x = cursor_col
+    dest_x = min(max(base_x+x, 0), end_col)
+    dest_y = cursor_row+y
+    if screen != 0:
+        dest_y += vte.get_row_count() * screen
+    dest_y = min(max(dest_y,adjustment.get_lower()),adjustment.get_upper()-1)
     vte.set_cursor_position(dest_x, dest_y)
 
     terminal.update_scroll()
