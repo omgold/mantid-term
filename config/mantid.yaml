@@ -1,12 +1,12 @@
 startup:
     rows: 30
     columns: 100
-    show-scrollbar: true
     font-scale: 1
     # shell: [/bin/bash]
 
 appearance:
     font: DejaVu Sans Mono Book 9
+    # show-scrollbar: true
     colors:
         foreground: black
         #foreground-bold: gray
