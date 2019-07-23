@@ -37,6 +37,8 @@ keybindings:
         <Ctrl>equal: {action: zoom, set: 1}
         <Ctrl>plus: {action: zoom, change: 0.1}
         <Ctrl>minus: {action: zoom, change: -0.1}
+        <Shift>Page_Up: {action: scroll, screen: -0.5}
+        <Shift>Page_Down: {action: scroll, screen: 0.5}
     normal:
         <Control>dead_circumflex: enter-command-mode
         <Control>asciicircum: enter-command-mode
