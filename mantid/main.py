@@ -350,6 +350,16 @@ def action_move(terminal, x=0, y=0, screen=0, row=None):
     vte.set_cursor_blink_mode(mode)
 
 
+def action_scroll(terminal, y=0, screen=0):
+    vte = terminal.vte
+
+    adjustment = vte.get_vadjustment()
+    dest = adjustment.get_value()
+    if screen != 0:
+        dest += vte.get_row_count() * screen
+    dest += y
+    adjustment.set_value(dest);
+
 def action_enter_command_mode(terminal):
     terminal.normal_cursor_position = terminal.vte.get_cursor_position()
     terminal.command_mode = True
@@ -397,6 +407,7 @@ actions = {
     "global": {
         "yank-selection": action_yank_selection,
         "zoom": action_zoom,
+        "scroll": action_scroll,
     },
     "normal": {
         "enter-command-mode": action_enter_command_mode,
