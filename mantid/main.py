@@ -386,10 +386,11 @@ def action_leave_select_mode(terminal):
         terminal.stop_select()
 
 
-def action_yank_selection(terminal, dest="clipboard", leave_command=False):
+def action_yank_selection(terminal, dest="clipboard", leave_command_mode=False):
     terminal.yank_selection(dest)
-    if leave_command:
+    if leave_command_mode:
         action_leave_command_mode(terminal)
+
 
 def action_paste_selection(terminal, src="clipboard"):
     terminal.paste_selection(src)
