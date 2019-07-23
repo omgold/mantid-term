@@ -180,6 +180,8 @@ class Terminal:
 
     def apply_config(self):
 
+        vte = self.vte
+
         startup = app.config["startup"]
         appearance = app.config["appearance"]
 
@@ -190,17 +192,17 @@ class Terminal:
 
 
         font = Pango.font_description_from_string(appearance["font"])
-        self.vte.set_font(font)
+        vte.set_font(font)
 
-        self.vte.set_colors(None, None, app.palette)
-        self.vte.set_color_background(app.colors["background"])
+        vte.set_colors(None, None, app.palette)
+        vte.set_color_background(app.colors["background"])
         foreground = app.colors["foreground"]
-        self.vte.set_color_foreground(foreground)
-        self.vte.set_color_bold(app.colors.get("foreground-bold",foreground))
-        self.vte.set_color_cursor(app.colors.get("cursor"))
-        self.vte.set_color_cursor_foreground(app.colors.get("cursor-foreground"))
-        self.vte.set_color_highlight(app.colors.get("highlight"))
-        self.vte.set_color_highlight_foreground(app.colors.get("highlight-foreground"))
+        vte.set_color_foreground(foreground)
+        vte.set_color_bold(app.colors.get("foreground-bold",foreground))
+        vte.set_color_cursor(app.colors.get("cursor"))
+        vte.set_color_cursor_foreground(app.colors.get("cursor-foreground"))
+        vte.set_color_highlight(app.colors.get("highlight"))
+        vte.set_color_highlight_foreground(app.colors.get("highlight-foreground"))
 
 
     def run(self, cmd):
