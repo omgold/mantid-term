@@ -48,8 +48,8 @@ keybindings:
     command:
         <Shift>r: reload-config
         Escape: leave-command-mode
-        Up: {action: move,y: -1}
-        Down: {action: move,y: 1}
+        Up: {action: move, y: -1}
+        Down: {action: move, y: 1}
         Left: {action: move, x: -1}
         Right: {action: move, x: 1}
         <Ctrl>space: start-select
