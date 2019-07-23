@@ -190,6 +190,7 @@ class Terminal:
         else:
             self.scrollbar.hide()
 
+        vte.set_scrollback_lines(startup["scrollback-lines"])
 
         font = Pango.font_description_from_string(appearance["font"])
         vte.set_font(font)
@@ -505,6 +506,7 @@ class App:
                 "rows": 25,
                 "columns": 80,
                 "font-scale": 1.,
+                "scrollback-lines": 1000,
             },
             "appearance": {
                 "show-scrollbar": True,
