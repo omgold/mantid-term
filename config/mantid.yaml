@@ -50,8 +50,12 @@ keybindings:
         Escape: leave-command-mode
         Up: {action: move, y: -1}
         Down: {action: move, y: 1}
+        Page_Up: {action: move, screen: -0.5}
+        Page_Down: {action: move, screen: 0.5}
         Left: {action: move, x: -1}
         Right: {action: move, x: 1}
+        Home: {action: move, row: 0}
+        End: {action: move, row: 1}
         <Ctrl>space: start-select
         <Alt>space: {action: start-select, mode: block}
         <Ctrl>w: yank-selection
