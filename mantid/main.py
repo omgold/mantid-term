@@ -421,12 +421,18 @@ def action_fullscreen(terminal, set=None, toggle=False):
         app.window.unfullscreen()
 
 
+def action_reload_config(terminal):
+    app.load_config()
+    app.apply_config()
+
+
 actions = {
     "global": {
         "yank-selection": action_yank_selection,
         "zoom": action_zoom,
         "scroll": action_scroll,
         "fullscreen": action_fullscreen,
+        "reload-config": action_reload_config,
     },
     "normal": {
         "enter-command-mode": action_enter_command_mode,
