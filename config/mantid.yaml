@@ -59,4 +59,4 @@ keybindings:
         <Ctrl>space: start-select
         <Alt>space: {action: start-select, mode: block}
         <Ctrl>w: yank-selection
-        <Alt>w: {action: yank-selection,leave_command: true}
+        <Alt>w: {action: yank-selection, leave_command_mode: true}
