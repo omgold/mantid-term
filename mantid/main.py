@@ -644,7 +644,7 @@ class App:
                     args = {}
                 else:
                     action_name = action.get("action","undefined")
-                    args = action
+                    args = action.copy()
                     try:
                         del args["action"]
                     except KeyError:
