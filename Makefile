@@ -30,6 +30,7 @@ install:
 	install -m 644 Mantid-1.0.gir ${DESTDIR}/usr/lib/mantid/share/gir-1.0
 	install -m 755 -d ${DESTDIR}/`./get-python-dir`/mantid
 	install -m 644 mantid/*.py ${DESTDIR}/`./get-python-dir`/mantid
+	install -m 755 libmantid.so ${DESTDIR}/usr/lib/mantid/lib
 	install -m 755 -d ${DESTDIR}/usr/share/mantid
 	install -m 644 config/mantid.yml ${DESTDIR}/usr/share/mantid
 	install -m 644 mantid.1 ${DESTDIR}/usr/share/man/man1
