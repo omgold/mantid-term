@@ -395,8 +395,24 @@ def action_scroll(terminal, y=0, screen=0):
     dest += y
     adjustment.set_value(dest);
 
+
 def action_enter_command_mode(terminal):
-    terminal.normal_cursor_position = terminal.vte.get_cursor_position()
+
+    vte = terminal.vte
+
+    adjustment = vte.get_vadjustment()
+    scroll_row = adjustment.get_value()
+    row_count = vte.get_row_count()
+    cursor_col, cursor_row = vte.get_cursor_position()
+    terminal.normal_cursor_position = cursor_col, cursor_row
+
+    if cursor_row < scroll_row:
+        terminal.vte.set_cursor_position(cursor_col,
+                                         scroll_row)
+    elif cursor_row - row_count >= scroll_row:
+        terminal.vte.set_cursor_position(cursor_col,
+                                         scroll_row+row_count-1)
+
     terminal.command_mode = True
 
 
