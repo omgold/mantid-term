@@ -502,24 +502,33 @@ actions = {
 }
 
 
+def get_arg_parser(home_dir,
+                   description="fully keyboard-controllable terminal inspired by termite"):
+
+    parser = argparse.ArgumentParser(prog="mantid", description=description)
+    parser.add_argument('COMMAND', help='command to execute (instead of shell)', nargs='*')
+    parser.add_argument('-v', '--version', help='version info', action="store_true")
+    parser.add_argument('-d', '--pwd', help='working directory', default='.')
+    parser.add_argument('-r', '--role', help='window role')
+    parser.add_argument('-t', '--title', help='window title')
+    parser.add_argument('-k', '--keep-open', help='keep window open after child exits')
+    parser.add_argument('-f', '--fullscreen', help='start in fullscreen mode',
+                        action="store_true")
+    parser.add_argument('-c', '--config', help='config file',
+                        default=home_dir+"/.config/mantid.yml")
+    parser.add_argument('-i', '--icon', help='window icon')
+    parser.add_argument('-a', '--print-accelerators',
+                        help='print key accelerator names in command mode',
+                        action="store_true")
+
+    return parser
+
+
 class App:
 
     def __init__(self):
 
-        parser = argparse.ArgumentParser(prog="mantid",
-                                         description="keyboard-controllable terminal")
-        parser.add_argument('COMMAND', help='command to execute', nargs='*')
-        parser.add_argument('-v', '--version', help='version info', action="store_true")
-        parser.add_argument('-d', '--pwd', help='working directory', default='.')
-        parser.add_argument('-r', '--role', help='window role')
-        parser.add_argument('-t', '--title', help='window title')
-        parser.add_argument('-k', '--keep-open', help='keep window open after child exits')
-        parser.add_argument('-f', '--fullscreen', help='start in fullscreen mode', action="store_true")
-        parser.add_argument('-c', '--config', help='config file', default=os.environ.get("HOME","")+"/.config/mantid.yml")
-        parser.add_argument('-i', '--icon', help='window icon')
-        parser.add_argument('-a', '--print-accelerators', help='print key accelerator names in command mode', action="store_true")
-
-        self.args = parser.parse_args()
+        self.args = get_arg_parser(os.environ.get("HOME",".")).parse_args()
         self.load_config()
 
         self.terminals = []
