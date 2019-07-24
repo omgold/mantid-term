@@ -1,12 +1,14 @@
 startup:
     rows: 30
     columns: 100
-    font-scale: 1
+    # font-scale: 1
     # shell: [/bin/bash]
+    fullscreen: false
+    scrollback-lines: 100
 
 appearance:
-    font: DejaVu Sans Mono Book 9
     # show-scrollbar: true
+    font: DejaVu Sans Mono Book 10
     colors:
         foreground: black
         #foreground-bold: gray
@@ -54,8 +56,9 @@ keybindings:
         Page_Down: {action: move, screen: 0.5}
         Left: {action: move, x: -1}
         Right: {action: move, x: 1}
-        Home: {action: move, row: 0}
-        End: {action: move, row: 1}
+        Home: {action: move-regexp, regexp: ^, backward: true}
+        End: {action: move-regexp, regexp: $}
+        <Shift>Right: {action: move-regexp, regexp: '\w+|$'}
         <Ctrl>space: start-select
         <Alt>space: {action: start-select, mode: block}
         <Ctrl>w: yank-selection

@@ -461,7 +461,7 @@ class App:
         parser.add_argument('-t', '--title', help='window title')
         parser.add_argument('-k', '--keep-open', help='keep window open after child exits')
         parser.add_argument('-f', '--fullscreen', help='start in fullscreen mode', action="store_true")
-        parser.add_argument('-c', '--config', help='config file', default=os.environ.get("HOME","")+"/.config/mantid.yaml")
+        parser.add_argument('-c', '--config', help='config file', default=os.environ.get("HOME","")+"/.config/mantid.yml")
         parser.add_argument('-i', '--icon', help='window icon')
         parser.add_argument('-a', '--print-accelerators', help='print key accelerator names in command mode', action="store_true")
 
