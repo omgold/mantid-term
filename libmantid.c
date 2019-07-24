@@ -119,11 +119,9 @@ gboolean match_regexp(VteTerminal* vte, GRegex* regexp,
     GArray* attributes;
     gchar* text = get_line(vte, row, &attributes);
     glong text_len = attributes->len;
-    glong cursor_pos;
-    if (!backward)
-        cursor_pos = -1;
-    else
-        cursor_pos = text_len+1;
+    glong cursor_pos = text_len;
+    gboolean exact_position = FALSE;
+
     for(glong i=0; i<text_len;i++) {
         VteCharAttributes a = g_array_index(attributes, VteCharAttributes, i);
         if (a.row > row) {
@@ -131,9 +129,17 @@ gboolean match_regexp(VteTerminal* vte, GRegex* regexp,
             break;
         }
         if (a.row == row && a.column == col) {
+            exact_position = TRUE;
             cursor_pos = i;
             break;
         }
+    }
+    if (cursor_pos == text_len && text_len != 0) {
+        VteCharAttributes a = g_array_index(attributes, VteCharAttributes, text_len-1);
+        if (col == 0 && row == a.row-1)
+            exact_position = TRUE;
+        else if (col == a.column+1 && row == a.row)
+            exact_position = TRUE;
     }
 
     GMatchInfo* match;
@@ -150,12 +156,12 @@ gboolean match_regexp(VteTerminal* vte, GRegex* regexp,
         else
             pos = end;
         if (!backward) {
-            if (pos > cursor_pos) {
+            if (pos > cursor_pos || !exact_position && pos == cursor_pos) {
                 match_pos = pos;
                 break;
             }
         } else {
-            if (pos >= cursor_pos)
+            if (pos > cursor_pos || exact_position && pos == cursor_pos)
                 break;
             else
                 match_pos = pos;
