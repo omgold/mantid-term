@@ -331,17 +331,17 @@ def action_inject_keys(terminal, chars):
     terminal.vte.feed_child_binary(chars)
 
 
-def action_move(terminal, x=0, y=0, screen=0, row=None):
+def action_move(terminal, x=0, y=0, screen=0, column=None):
 
     vte = terminal.vte
 
-    end_col = vte.get_column_count()-1
+    col_count = vte.get_column_count()
     cursor_col, cursor_row = vte.get_cursor_position()
     adjustment = vte.get_vadjustment()
     mode = vte.get_cursor_blink_mode()
     vte.set_cursor_blink_mode(Vte.CursorBlinkMode.OFF)
-    if row is not None:
-        base_x = vte.get_column_count() * row
+    if column is not None:
+        base_x = vte.get_column_count() * column
     else:
         base_x = cursor_col
     dest_x = min(max(base_x+x, 0), end_col)
