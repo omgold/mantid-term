@@ -326,12 +326,24 @@ class Terminal:
 
 
 def action_inject_keys(terminal, chars):
+    """sends characters to the terminal
+
+chars (string): characters to send
+"""
+
     if isinstance(chars, str):
         chars = chars.encode("utf-8")
     terminal.vte.feed_child_binary(chars)
 
 
 def action_move(terminal, x=0, y=0, screen=0, column=None):
+    """moves cursor
+
+x (int): number of rows to move
+y (int): number of columns to move
+screen (float): multiples of screen height to move
+column (float): multiples of screen width to move
+"""
 
     vte = terminal.vte
 
@@ -368,6 +380,13 @@ def action_move(terminal, x=0, y=0, screen=0, column=None):
 
 
 def action_move_regexp(terminal, regexp, backward=False, after=False):
+    """move within line of cursor to the next matching regexp
+(uses GLib regex)
+
+regexp (string): regexp to match
+backward (bool): whether to search backward from cursor
+after (bool): whether to move to start or end of matched text
+"""
 
     vte = terminal.vte
     cursor_col, cursor_row = vte.get_cursor_position()
@@ -386,6 +405,12 @@ def action_move_regexp(terminal, regexp, backward=False, after=False):
 
 
 def action_scroll(terminal, y=0, screen=0):
+    """scroll terminal
+
+y (int): number of rows to scroll (negative values to scroll up)
+screen (float): multiples of screen height to scroll
+"""
+
     vte = terminal.vte
 
     adjustment = vte.get_vadjustment()
@@ -397,6 +422,7 @@ def action_scroll(terminal, y=0, screen=0):
 
 
 def action_enter_command_mode(terminal):
+    """switches to command mode"""
 
     vte = terminal.vte
 
@@ -417,6 +443,8 @@ def action_enter_command_mode(terminal):
 
 
 def action_leave_command_mode(terminal):
+    """switches to normal mode"""
+
     terminal.vte.set_cursor_position(*terminal.normal_cursor_position)
     terminal.command_mode = False
     if terminal.select_mode is not None:
@@ -425,27 +453,51 @@ def action_leave_command_mode(terminal):
 
 
 def action_enter_select_mode(terminal, mode="standard"):
+    """enter one of the selection modes
+
+mode (string): selection mode (can be "standard", "line" or "block")
+"""
+
     if mode not in ("standard", "line", "block"):
         return
     terminal.start_select(mode)
 
 
 def action_leave_select_mode(terminal):
+    """stop selecting text but stay in command mode"""
+
     if terminal.select_mode is not None:
         terminal.stop_select()
 
 
 def action_yank_selection(terminal, dest="clipboard", leave_command_mode=False):
+    """copy selected text to X selection
+
+dest (string): destination to copy to (can be "primary" or "clipboard")
+leave_command_mode (bool): if in command mode, switch back to normal mode
+"""
+
     terminal.yank_selection(dest)
     if leave_command_mode:
         action_leave_command_mode(terminal)
 
 
 def action_paste_selection(terminal, src="clipboard"):
+    """send X selection to terminal
+
+src (string): selection to copy from (can be "primary" or "clipboard")
+"""
     terminal.paste_selection(src)
 
 
 def action_zoom(terminal, set=None, change=0):
+    """change text zoom level
+
+set (float): set scaling factor to this value
+change (float): relative amount to change current scaling factor
+                (example: -0.5 reduces scale to half, 1.0 doubles scale)
+"""
+
     scale = app.font_scale
     #introspect(Pango.SCALE)
     if set is not None:
@@ -457,6 +509,12 @@ def action_zoom(terminal, set=None, change=0):
 
 
 def action_fullscreen(terminal, set=None, toggle=False):
+    """switch between normal and fullscreen mode
+
+set (bool): enable/disable fullscreen mode
+toggle (bool): if true, toggle fullscreen mode
+"""
+
     if set is not None:
         if set:
             app.is_fullscreen = True
@@ -471,6 +529,8 @@ def action_fullscreen(terminal, set=None, toggle=False):
 
 
 def action_reload_config(terminal):
+    """reload configuration file"""
+
     app.load_config()
     app.apply_config()
 
