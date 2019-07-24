@@ -1,4 +1,4 @@
-all: libmantid.so Mantid-1.0.typelib
+all: libmantid.so Mantid-1.0.typelib mantid.1
 
 libmantid.so: libmantid.c
 	gcc -O2 -I vte-ng/src/ `pkg-config --cflags gtk+-3.0` -shared -fpic $< -o $@
@@ -8,6 +8,9 @@ Mantid-1.0.typelib: Mantid-1.0.gir
 
 .PHONY: vte-ng
 
+mantid.1: mantid/*.py
+	./gen-man
+
 vte-ng/src/.libs/libvte-2.91.so: vte-ng
 
 vte-ng:
@@ -16,7 +19,9 @@ vte-ng:
 	$(MAKE) -C vte-ng
 
 install:
-	install -m 755 -d ${DESTDIR}/usr/bin ${DESTDIR}/usr/lib/mantid
+	install -m 755 -d ${DESTDIR}/usr/bin \
+                    ${DESTDIR}/usr/lib/mantid \
+                    ${DESTDIR}/usr/share/man/man1
 	install -m 755 mantid-py ${DESTDIR}/usr/lib/mantid/mantid
 	install -m 755 mantid-py ${DESTDIR}/usr/bin
 	ln -sf ../lib/mantid/mantid ${DESTDIR}/usr/bin/mantid
@@ -27,3 +32,5 @@ install:
 	install -m 644 mantid/*.py ${DESTDIR}/`./get-python-dir`/mantid
 	install -m 755 -d ${DESTDIR}/usr/share/mantid
 	install -m 644 config/mantid.yml ${DESTDIR}/usr/share/mantid
+	install -m 644 mantid.1 ${DESTDIR}/usr/share/man/man1
+	python3 -O -m compileall ${DESTDIR}/`./get-python-dir`/mantid
