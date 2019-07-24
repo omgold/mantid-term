@@ -12,5 +12,18 @@ vte-ng/src/.libs/libvte-2.91.so: vte-ng
 
 vte-ng:
 	bash -c 'cd vte-ng; \
-	./autogen.sh --disable-static --disable-vala --disable-gtk-doc-html --with-gnutls --without-iconv --disable-glade --enable-introspection'
+	./autogen.sh --disable-static --disable-vala --disable-gtk-doc-html --with-gnutls --without-iconv --disable-glade --enable-introspection --prefix=/usr/lib/mantid'
 	$(MAKE) -C vte-ng
+
+install:
+	install -m 755 -d ${DESTDIR}/usr/bin ${DESTDIR}/usr/lib/mantid
+	install -m 755 mantid-py ${DESTDIR}/usr/lib/mantid/mantid
+	install -m 755 mantid-py ${DESTDIR}/usr/bin
+	ln -sf ../lib/mantid/mantid ${DESTDIR}/usr/bin/mantid
+	$(MAKE) -C vte-ng install DESTDIR=${DESTDIR}
+	install -m 644 Mantid-1.0.typelib ${DESTDIR}/usr/lib/mantid/lib/girepository-1.0
+	install -m 644 Mantid-1.0.gir ${DESTDIR}/usr/lib/mantid/share/gir-1.0
+	install -m 755 -d ${DESTDIR}/`./get-python-dir`/mantid
+	install -m 644 mantid/*.py ${DESTDIR}/`./get-python-dir`/mantid
+	install -m 755 -d ${DESTDIR}/usr/share/mantid
+	install -m 644 config/mantid.yml ${DESTDIR}/usr/share/mantid
