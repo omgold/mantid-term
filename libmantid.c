@@ -145,8 +145,6 @@ gboolean match_regexp(VteTerminal* vte, GRegex* regexp,
     while (g_match_info_matches(match)) {
         gint pos, start, end;
         gboolean success = g_match_info_fetch_pos(match,0, &start, &end);
-        printf("s: %i %i %i\n",success, start, end);
-        // print(match.fetch(0),fetch_pos.__class__)
         if (!at_end)
             pos = start;
         else
@@ -157,7 +155,6 @@ gboolean match_regexp(VteTerminal* vte, GRegex* regexp,
                 break;
             }
         } else {
-            printf("c: %i %i\n",pos,cursor_pos);
             if (pos >= cursor_pos)
                 break;
             else
@@ -165,8 +162,6 @@ gboolean match_regexp(VteTerminal* vte, GRegex* regexp,
         }
         g_match_info_next(match, NULL);
     }
-
-    printf("m: %i %i\n",success, match_pos);
 
     g_match_info_free(match);
 
