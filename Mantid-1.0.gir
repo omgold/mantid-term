@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<repository version="1.2"
+            xmlns="http://www.gtk.org/introspection/core/1.0"
+            xmlns:c="http://www.gtk.org/introspection/c/1.0"
+            xmlns:glib="http://www.gtk.org/introspection/glib/1.0">
+  <include name="Vte" version="2.91"/>
+  <include name="GLib" version="2.0"/>
+  <package name="Mantid"/>
+  <namespace name="Mantid"
+             version="1.0"
+             shared-library="libmantid.so"
+             c:identifier-prefixes="Mantid"
+             c:symbol-prefixes="mantid">
+    <function name="get_line"
+              c:identifier="get_line">
+      <return-value transfer-ownership="full">
+        <type name="utf8" c:type="char*"/>
+      </return-value>
+      <parameters>
+        <parameter name="terminal" transfer-ownership="none">
+          <type name="Vte.Terminal" c:type="VteTerminal*"/>
+        </parameter>
+        <parameter name="row" transfer-ownership="none">
+          <type name="glong" c:type="glong"/>
+        </parameter>
+        <parameter name="attributes"
+                   direction="out"
+                   caller-allocates="0"
+                   transfer-ownership="full">
+          <array zero-terminated="0" name="GLib.Array" c:type="GArray**">
+            <type name="Vte.CharAttributes"/>
+          </array>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="match_regexp"
+              c:identifier="match_regexp">
+      <return-value transfer-ownership="full">
+        <type name="gboolean" c:type="gboolean"/>
+      </return-value>
+      <parameters>
+        <parameter name="terminal" transfer-ownership="none">
+          <type name="Vte.Terminal" c:type="VteTerminal*"/>
+        </parameter>
+        <parameter name="regexp" transfer-ownership="none">
+          <type name="GLib.Regex" c:type="GRegex*"/>
+        </parameter>
+        <parameter name="row" transfer-ownership="none">
+          <type name="glong" c:type="glong"/>
+        </parameter>
+        <parameter name="col" transfer-ownership="none">
+          <type name="glong" c:type="glong"/>
+        </parameter>
+        <parameter name="backward" transfer-ownership="none">
+          <type name="gboolean" c:type="gboolean"/>
+        </parameter>
+        <parameter name="at_end" transfer-ownership="none">
+          <type name="gboolean" c:type="gboolean"/>
+        </parameter>
+        <parameter name="match_row"
+                   direction="out" transfer-ownership="none">
+          <type name="glong" c:type="glong*"/>
+        </parameter>
+        <parameter name="match_col"
+                   direction="out" transfer-ownership="none">
+          <type name="glong" c:type="glong*"/>
+        </parameter>
+      </parameters>
+    </function>
+  </namespace>
+</repository>
