@@ -367,6 +367,24 @@ def action_move(terminal, x=0, y=0, screen=0, column=None):
     vte.set_cursor_blink_mode(mode)
 
 
+def action_move_regexp(terminal, regexp, backward=False, after=False):
+
+    vte = terminal.vte
+    cursor_col, cursor_row = vte.get_cursor_position()
+    success, row, col = mc.match_regexp(vte,regexp, cursor_row, cursor_col, backward, after)
+
+    if not success:
+        return
+
+    adjustment = vte.get_vadjustment()
+    mode = vte.get_cursor_blink_mode()
+    vte.set_cursor_blink_mode(Vte.CursorBlinkMode.OFF)
+    vte.set_cursor_position(col, row)
+    terminal.update_scroll()
+    terminal.update_selection()
+    vte.set_cursor_blink_mode(mode)
+
+
 def action_scroll(terminal, y=0, screen=0):
     vte = terminal.vte
 
@@ -440,6 +458,10 @@ def action_reload_config(terminal):
     app.apply_config()
 
 
+regexp_compile_flags_none = GLib.RegexCompileFlags(0)
+regexp_match_flags_none = GLib.RegexMatchFlags(0)
+
+
 actions = {
     "global": {
         "yank-selection": action_yank_selection,
@@ -456,6 +478,7 @@ actions = {
     "command": {
         "leave-command-mode": action_leave_command_mode,
         "move": action_move,
+        "move-regexp": action_move_regexp,
         "start-select": action_enter_select_mode,
         "end-select": action_leave_select_mode,
     },
@@ -609,6 +632,12 @@ class App:
                         del args["action"]
                     except KeyError:
                         pass
+                    if action_name == "move-regexp":
+                        regexp = args.get("regexp","\\w+")
+                        args["regexp"] = GLib.Regex.new(regexp,
+                                                        regexp_compile_flags_none,
+                                                        regexp_match_flags_none)
+
                 cmd = actions[s].get(action_name) or actions["global"].get(action_name)
                 if cmd is None:
                     args = [ "%s=%s" % (key,arg) for key, arg in args.items() ]
