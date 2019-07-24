@@ -1,8 +1,7 @@
 #!/bin/bash
 
 SOURCE_DIR=$(dirname "$(realpath "$BASH_SOURCE")")
+export GI_TYPELIB_PATH=$SOURCE_DIR/lib/girepository-1.0
+export LD_LIBRARY_PATH=$SOURCE_DIR/lib
 
-export GI_TYPELIB_PATH="$SOURCE_DIR"/../vte-ng/bindings/gir
-export LD_LIBRARY_PATH="$SOURCE_DIR"/../vte-ng/src/.libs/
-
-python3 -c 'from mantid.main import main; main()' "$@"
+exec python3 -c 'from mantid.main import main; main()' "$@"
