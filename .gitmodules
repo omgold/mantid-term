@@ -1,0 +1,3 @@
+[submodule "vte-ng"]
+	path = vte-ng
+	url = https://github.com/thestinger/vte-ng
