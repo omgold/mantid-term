@@ -340,15 +340,26 @@ def action_move(terminal, x=0, y=0, screen=0, column=None):
     adjustment = vte.get_vadjustment()
     mode = vte.get_cursor_blink_mode()
     vte.set_cursor_blink_mode(Vte.CursorBlinkMode.OFF)
+
     if column is not None:
         base_x = vte.get_column_count() * column
     else:
         base_x = cursor_col
-    dest_x = min(max(base_x+x, 0), end_col)
-    dest_y = cursor_row+y
+
+    diff_y, dest_x = divmod(base_x+x, col_count)
+    dest_y = cursor_row + y + diff_y
+
     if screen != 0:
         dest_y += vte.get_row_count() * screen
-    dest_y = min(max(dest_y,adjustment.get_lower()),adjustment.get_upper()-1)
+    if dest_y < 0:
+        dest_y = 0
+        dest_x = 0
+    else:
+        row_count = adjustment.get_upper()
+        if dest_y >= row_count:
+            dest_y = row_count-1
+            dest_x = col_count-1
+
     vte.set_cursor_position(dest_x, dest_y)
 
     terminal.update_scroll()
