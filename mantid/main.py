@@ -506,7 +506,8 @@ def get_arg_parser(home_dir,
                    description="fully keyboard-controllable terminal inspired by termite"):
 
     parser = argparse.ArgumentParser(prog="mantid", description=description)
-    parser.add_argument('COMMAND', help='command to execute (instead of shell)', nargs='*')
+    parser.add_argument('COMMAND', help='command to execute (instead of shell)', nargs='?')
+    parser.add_argument('ARG', help='arguments to command', nargs='*')
     parser.add_argument('-v', '--version', help='version info', action="store_true")
     parser.add_argument('-d', '--pwd', help='working directory', default='.')
     parser.add_argument('-r', '--role', help='window role')
@@ -561,8 +562,8 @@ class App:
 
         self.apply_config()
 
-        if len(self.args.COMMAND) != 0:
-            cmd = self.args.COMMAND
+        if self.args.COMMAND is not None:
+            cmd = [self.args.COMMAND] + self.args.ARG
         else:
             cmd = startup["shell"]
             if isinstance(cmd, str):
