@@ -421,6 +421,7 @@ def action_leave_command_mode(terminal):
     terminal.command_mode = False
     if terminal.select_mode is not None:
         terminal.stop_select()
+    terminal.update_scroll()
 
 
 def action_enter_select_mode(terminal, mode="standard"):
