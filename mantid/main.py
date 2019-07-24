@@ -317,6 +317,7 @@ class Terminal:
             self.select_mode = None
             self.stop_select()
 
+
     def paste_selection(self, dest):
         if dest == "primary":
             self.vte.paste_primary()
