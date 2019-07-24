@@ -499,7 +499,6 @@ change (float): relative amount to change current scaling factor
 """
 
     scale = app.font_scale
-    #introspect(Pango.SCALE)
     if set is not None:
         scale = set
     scale *= (1+change)
