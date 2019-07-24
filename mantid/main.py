@@ -6,12 +6,14 @@ import argparse
 import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Vte", "2.91")
+gi.require_version("Mantid", "1.0")
 from gi.repository import GLib
 from gi.repository import Gio
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import Vte
 from gi.repository import Pango
+from gi.repository import Mantid as mc
 
 from .colors import rgba_parse, default_palette, default_colors, transparent
 from .keybindings import default_keybindings
