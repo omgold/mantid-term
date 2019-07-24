@@ -1,0 +1,7 @@
+#!/bin/bash
+
+SOURCE_DIR=$(dirname "$(realpath "$BASH_SOURCE")")
+export GI_TYPELIB_PATH="$SOURCE_DIR/vte-ng/bindings/gir:$SOURCE_DIR"
+export LD_LIBRARY_PATH="$SOURCE_DIR/vte-ng/src/.libs:$SOURCE_DIR"
+
+python3 -c 'from mantid.doc import generate_scdoc; generate_scdoc()' | scdoc >mantid.1
