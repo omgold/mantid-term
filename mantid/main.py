@@ -33,6 +33,8 @@ def get_key_name(keyval, modifiers):
 
 
 def child_exited_cb(vte, status, terminal):
+    if terminal.keep_open:
+        return
     app.terminals.remove(terminal)
     if len(app.terminals) == 0:
         Gtk.main_quit()
@@ -128,6 +130,7 @@ def window_title_cb(vte, terminal):
 class Terminal:
     def __init__(self, keep_open):
 
+        self.keep_open = keep_open
         self.command_mode = False
         self.select_mode = None
         self.selection_start = None
@@ -215,6 +218,8 @@ class Terminal:
         vte.set_mouse_autohide(appearance["mouse-autohide"])
         vte.set_allow_bold(appearance["allow-bold"])
         vte.set_bold_is_bright(appearance["bold-is-bright"])
+        # vte_terminal_search_set_wrap_around(vte, cfg_bool("search_wrap", TRUE));
+        # vte_terminal_set_allow_hyperlink(vte, cfg_bool("hyperlinks", FALSE));
 
         font = Pango.font_description_from_string(appearance["font"])
         vte.set_font(font)
@@ -630,7 +635,8 @@ def get_arg_parser(home_dir,
     parser.add_argument('-d', '--pwd', help='working directory', default='.')
     parser.add_argument('-r', '--role', help='window role')
     parser.add_argument('-t', '--title', help='window title')
-    parser.add_argument('-k', '--keep-open', help='keep window open after child exits')
+    parser.add_argument('-k', '--keep-open', help='keep window open after child exits',
+                        action="store_true")
     parser.add_argument('-f', '--fullscreen', help='start in fullscreen mode',
                         action="store_true")
     parser.add_argument('-c', '--config', help='config file',
