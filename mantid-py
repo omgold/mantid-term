@@ -1,6 +1,8 @@
 #!/bin/bash
 
 SOURCE_DIR=$(dirname "$(realpath "$BASH_SOURCE")")
+export __MANTID__GI_TYPELIB_PATH=$GI_TYPELIB_PATH
+export __MANTID__LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 export GI_TYPELIB_PATH=$SOURCE_DIR/lib/girepository-1.0
 export LD_LIBRARY_PATH=$SOURCE_DIR/lib
 

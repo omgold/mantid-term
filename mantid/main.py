@@ -829,6 +829,20 @@ class App:
     def __init__(self):
 
         self.args = get_arg_parser(os.environ.get("HOME",".")).parse_args()
+
+        p = os.environ["__MANTID__LD_LIBRARY_PATH"]
+        if p != "":
+            os.environ["LD_LIBRARY_PATH"] = p
+        else:
+            del os.environ["LD_LIBRARY_PATH"]
+        p = os.environ["__MANTID__GI_TYPELIB_PATH"]
+        if p != "":
+            os.environ["GI_TYPELIB_PATH"] = p
+        else:
+            del os.environ["GI_TYPELIB_PATH"]
+        del os.environ["__MANTID__LD_LIBRARY_PATH"]
+        del os.environ["__MANTID__GI_TYPELIB_PATH"]
+
         self.load_config()
 
         self.terminals = []
