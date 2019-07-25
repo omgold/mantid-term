@@ -133,15 +133,24 @@ class Terminal:
         self.normal_cursor_position = None
 
         self.vte = Vte.Terminal()
+        vte_style = self.vte.get_style_context()
+        Gtk.StyleContext.add_class(vte_style,"mantid")
+        vte_style.add_provider(app.style, Gtk.STYLE_PROVIDER_PRIORITY_USER)
 
         self.hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        Gtk.StyleContext.add_class(self.hbox.get_style_context(),"mantid")
+        hbox_style = self.hbox.get_style_context()
+        Gtk.StyleContext.add_class(hbox_style,"mantid")
+        hbox_style.add_provider(app.style, Gtk.STYLE_PROVIDER_PRIORITY_USER)
+
 
         self.hint_overlay = Gtk.Overlay()
         self.hint_overlay.override_background_color(Gtk.StateFlags.NORMAL,transparent)
 
         self.scrollbar = Gtk.Scrollbar.new(Gtk.Orientation.VERTICAL,
                                            self.vte.get_vadjustment())
+        scrollbar_style = self.scrollbar.get_style_context()
+        Gtk.StyleContext.add_class(scrollbar_style,"mantid")
+        scrollbar_style.add_provider(app.style, Gtk.STYLE_PROVIDER_PRIORITY_USER)
 
         self.da = Gtk.DrawingArea()
         self.da.override_background_color(Gtk.StateFlags.NORMAL,transparent)
@@ -620,6 +629,7 @@ class App:
         self.active_terminal = None
         self.is_fullscreen = False
 
+        self.style = Gtk.CssProvider()
 
     def setup(self):
         self.hint_overlay = Gtk.Overlay()
