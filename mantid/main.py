@@ -212,6 +212,7 @@ class Terminal:
         vte.set_scroll_on_output(startup["scroll-on-output"])
         vte.set_scroll_on_keystroke(startup["scroll-on-keystroke"])
         vte.set_audible_bell(startup["audible-bell"])
+        vte.set_mouse_autohide(appearance["mouse-autohide"])
 
         font = Pango.font_description_from_string(appearance["font"])
         vte.set_font(font)
@@ -734,6 +735,7 @@ class App:
                 "show-scrollbar": True,
                 "cursor-blink": "system",
                 "cursor-shape": "block",
+                "mouse-autohide": False,
                 "cell-width-scale": 1.,
                 "cell-height-scale": 1.,
                 "icon": "terminal",
