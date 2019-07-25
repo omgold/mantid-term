@@ -769,10 +769,16 @@ class App:
                         pass
                     if action_name == "move-regexp":
                         regexp = args.get("regexp","\\w+")
-                        args["regexp"] = GLib.Regex.new(regexp,
-                                                        regexp_compile_flags_none,
-                                                        regexp_match_flags_none)
-
+                        try:
+                            gre = GLib.Regex.new(regexp,
+                                                 regexp_compile_flags_none,
+                                                 regexp_match_flags_none)
+                        except gi.repository.GLib.Error:
+                            print("keybindings:",
+                                  "in action %s bound to %s regexp is invalid." %
+                                  (format_action(action_name, args), key), file=sys.stderr)
+                            continue
+                        args["regexp"] = gre
                 cmd = actions[s].get(action_name) or actions["global"].get(action_name)
                 if cmd is None:
                     print("keybindings: action %s bound to %s is not defined." %
