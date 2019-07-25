@@ -109,8 +109,14 @@ def window_state_cb(vte, event):
 
 def window_title_cb(vte, terminal):
     if app.dynamic_title and terminal == app.active_terminal:
-        vte.get_toplevel().set_title(vte.get_window_title())
-    pass
+        vte_title = vte.get_window_title()
+        terminal_count = len(app.terminals)
+        if terminal_count>1:
+            pos = app.terminals.index(terminal)
+            title = "%s [%i/%i]" % (vte_title, pos+1, terminal_count)
+        else:
+            title = vte_title
+        vte.get_toplevel().set_title(title)
 
 
 # def spawn_child_cb(pty, task, terminal):
