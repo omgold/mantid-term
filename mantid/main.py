@@ -235,7 +235,6 @@ class Terminal:
         vte.set_color_highlight_foreground(app.colors.get("highlight-foreground"))
 
         blink = appearance["cursor-blink"]
-        #introspect(Vte);
         if blink == True:
             blink_mode = Vte.CursorBlinkMode.ON
         elif blink == False:
@@ -309,7 +308,6 @@ class Terminal:
         row_count = vte.get_row_count()
         _, cursor_row = vte.get_cursor_position()
 
-        #print(cursor_row, row_count, scroll_row)
         if cursor_row < scroll_row:
             adjustment.set_value(cursor_row)
         elif cursor_row - row_count >= scroll_row:
@@ -794,7 +792,6 @@ class App:
 
             for key, action in b.items():
                 acc = Gtk.accelerator_parse(key)
-                #print(acc)
                 if acc.accelerator_key == 0:
                     print("keybindings:", "accelerator ", key, "failed to parse. Will be ignored.", file=sys.stderr)
                     continue
@@ -921,9 +918,6 @@ class App:
         keymap = Gdk.Keymap.get_for_display(display)
         intent_default_mod_mask = keymap.get_modifier_mask(Gdk.ModifierIntent.DEFAULT_MOD_MASK)
 
-        #print("r",event.hardware_keycode, event.state)
-        #introspect(Gdk.ModifierType)
-
         # 'direct' match
         modifiers = event.state
 
@@ -975,7 +969,6 @@ class App:
             if debug_print:
                 print( "key '%s' pressed" % label1, file=sys.stderr)
 
-#introspect(Gio.Cancellable)
 
 def main():
 #if __name__ == "__main__":
