@@ -223,6 +223,15 @@ class Terminal:
             blink_mode = Vte.CursorBlinkMode.SYSTEM
         vte.set_cursor_blink_mode(blink_mode)
 
+        shape = appearance["cursor-shape"]
+        if shape == "ibeam":
+            shape_mode = Vte.CursorShape.IBEAM
+        elif shape == "underline":
+            shape_mode = Vte.CursorShape.UNDERLINE
+        else:
+            shape_mode = Vte.CursorShape.BLOCK
+        vte.set_cursor_shape(shape_mode)
+
 
     def run(self, cmd):
         env = os.environ.copy()
@@ -672,6 +681,7 @@ class App:
             "appearance": {
                 "show-scrollbar": True,
                 "cursor-blink": "system",
+                "cursor-shape": "block",
                 "icon": "terminal",
                 "font": "Monospace",
                 "colors": {},
