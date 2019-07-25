@@ -480,6 +480,7 @@ def action_enter_command_mode(terminal):
     """switches to command mode"""
 
     vte = terminal.vte
+    vte.disconnect_pty_read()
 
     adjustment = vte.get_vadjustment()
     scroll_row = adjustment.get_value()
@@ -500,11 +501,13 @@ def action_enter_command_mode(terminal):
 def action_leave_command_mode(terminal):
     """switches to normal mode"""
 
-    terminal.vte.set_cursor_position(*terminal.normal_cursor_position)
+    vte = terminal.vte
+    vte.set_cursor_position(*terminal.normal_cursor_position)
     terminal.command_mode = False
     if terminal.select_mode is not None:
         terminal.stop_select()
     terminal.update_scroll()
+    vte.connect_pty_read()
 
 
 def action_enter_select_mode(terminal, mode="standard"):
