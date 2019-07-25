@@ -619,7 +619,7 @@ css_appearance = {
 css_colors = {
     "padding": ("box", "background-color"),
     "scrollbar": ("scrollbar.mantid>contents>trough>slider", "background-color"),
-    "scrollbar-padding": ("scrollbar.mantid>contents", "background-color"),
+    "scrollbar-background": ("scrollbar.mantid>contents", "background-color"),
 }
 
 
