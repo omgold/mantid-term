@@ -774,9 +774,7 @@ class App:
         if self.args.COMMAND is not None:
             cmd = [self.args.COMMAND] + self.args.ARG
         else:
-            cmd = startup["shell"]
-            if isinstance(cmd, str):
-                cmd = [ cmd ]
+            cmd = self.shell
 
         self.add_terminal(keep_open, 0)
         self.set_active_terminal(self.terminals[0])
@@ -894,6 +892,11 @@ class App:
 
         if role is not None:
             window.set_role(self.args.role)
+
+        shell = startup["shell"]
+        if isinstance(shell, str):
+            shell = [ shell ]
+        self.shell = shell
 
         if self.args.title is not None:
             self.title = self.args.title
