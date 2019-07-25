@@ -213,6 +213,16 @@ class Terminal:
         vte.set_color_highlight(app.colors.get("highlight"))
         vte.set_color_highlight_foreground(app.colors.get("highlight-foreground"))
 
+        blink = appearance["cursor-blink"]
+        #introspect(Vte);
+        if blink == True:
+            blink_mode = Vte.CursorBlinkMode.ON
+        elif blink == False:
+            blink_mode = Vte.CursorBlinkMode.OFF
+        else:
+            blink_mode = Vte.CursorBlinkMode.SYSTEM
+        vte.set_cursor_blink_mode(blink_mode)
+
 
     def run(self, cmd):
         env = os.environ.copy()
@@ -661,6 +671,7 @@ class App:
             },
             "appearance": {
                 "show-scrollbar": True,
+                "cursor-blink": "system",
                 "icon": "terminal",
                 "font": "Monospace",
                 "colors": {},
