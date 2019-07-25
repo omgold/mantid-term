@@ -623,6 +623,36 @@ css_colors = {
 }
 
 
+default_config = {
+    "startup": {
+        "term": "xterm-256color",
+        "role": None,
+        "keep-open": False,
+        "fullscreen": False,
+        "shell": os.environ.get("SHELL","/bin/sh"),
+        "rows": 25,
+        "columns": 80,
+        "font-scale": 1.,
+        "scrollback-lines": 1000,
+        "scroll-on-output": False,
+        "scroll-on-keystroke": True,
+        "audible-bell": False,
+    },
+    "appearance": {
+        "show-scrollbar": True,
+        "cursor-blink": "system",
+        "cursor-shape": "block",
+        "mouse-autohide": False,
+        "allow-bold": True,
+        "bold-is-bright": False,
+        "cell-width-scale": 1.,
+        "cell-height-scale": 1.,
+        "icon": "terminal",
+        "font": "Monospace",
+    },
+}
+
+
 def get_arg_parser(home_dir,
                    description="fully keyboard-controllable terminal inspired by termite"):
 
@@ -723,36 +753,11 @@ class App:
     def load_config(self):
 
         self.config = {
-            "startup": {
-                "term": "xterm-256color",
-                "role": None,
-                "keep-open": False,
-                "fullscreen": False,
-                "shell": os.environ.get("SHELL","/bin/sh"),
-                "rows": 25,
-                "columns": 80,
-                "font-scale": 1.,
-                "scrollback-lines": 1000,
-                "scroll-on-output": False,
-                "scroll-on-keystroke": True,
-                "audible-bell": False,
-            },
-            "appearance": {
-                "show-scrollbar": True,
-                "cursor-blink": "system",
-                "cursor-shape": "block",
-                "mouse-autohide": False,
-                "allow-bold": True,
-                "bold-is-bright": False,
-                "cell-width-scale": 1.,
-                "cell-height-scale": 1.,
-                "icon": "terminal",
-                "font": "Monospace",
-                "colors": {},
-            },
-            "keybindings": {
-            },
+            "keybindings": {}
         }
+        for key, section in default_config.items():
+            self.config[key] = section.copy()
+        self.config["appearance"]["colors"] = {}
 
         if os.path.exists(self.args.config):
             try:
