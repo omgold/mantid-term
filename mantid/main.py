@@ -1,5 +1,6 @@
 import sys
 import os
+import signal
 import re
 import yaml
 import argparse
@@ -299,6 +300,7 @@ class Terminal:
 
         # self.vte.set_pty(pty)
 
+        _, self.pid = \
         self.vte.spawn_sync(Vte.PtyFlags.DEFAULT,
                             None, # pwd
                             cmd, # cmd
@@ -609,12 +611,82 @@ def action_reload_config(terminal):
     app.apply_config()
 
 
+def action_new_tab(terminal, position=None, select=True, keep_open=False, command=None):
+
+    if position == "start":
+        index = 0
+    elif position == "before":
+        index = app.terminals.index(terminal)
+    elif position == "after":
+        index = app.terminals.index(terminal)+1
+    else:
+        index = len(app.terminals)
+
+    new_terminal = app.add_terminal(keep_open, index)
+    if command is None:
+        command = app.shell
+    new_terminal.run(command)
+    if select:
+        app.set_active_terminal(new_terminal)
+    else:
+        set_window_title()
+
+
+def action_close_tab(terminal):
+    os.kill(terminal.pid, signal.SIGHUP)
+    app.remove_terminal(terminal, 0)
+
+
+def action_select_tab(terminal, position=None):
+    terminal_count = len(app.terminals)
+    if position == "first":
+        index = 0
+    elif position == "previous":
+        index = app.terminals.index(terminal) - 1
+        if index == -1:
+            index = terminal_count - 1
+    elif position == "next":
+        index = app.terminals.index(terminal) + 1
+        if index == terminal_count:
+            index = 0
+    elif position == "last":
+        index = terminal_count - 1
+    else:
+        return
+    app.set_active_terminal(app.terminals[index])
+
+
+def action_move_tab(terminal, position=None):
+    terminal_count = len(app.terminals)
+    if position == "start":
+        index = 0
+    elif position == "before":
+        index = app.terminals.index(terminal) - 1
+        if index == -1:
+            return
+    elif position == "after":
+        index = app.terminals.index(terminal) + 1
+        if index == terminal_count:
+            return
+    elif position == "end":
+        index = len(app.terminals) - 1
+    else:
+        return
+    app.terminals.remove(terminal)
+    app.terminals.insert(index, terminal)
+    set_window_title()
+
+
 regexp_compile_flags_none = GLib.RegexCompileFlags(0)
 regexp_match_flags_none = GLib.RegexMatchFlags(0)
 
 
 actions = {
     "global": {
+        "new-tab": action_new_tab,
+        "close-tab": action_close_tab,
+        "select-tab": action_select_tab,
+        "move-tab": action_move_tab,
         "yank-selection": action_yank_selection,
         "zoom": action_zoom,
         "scroll": action_scroll,
