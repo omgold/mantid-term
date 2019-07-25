@@ -623,6 +623,11 @@ def get_arg_parser(home_dir,
     return parser
 
 
+def format_action(name,args):
+    res = "%s(%s)" % (name, ", ".join([ "%s=%s" % arg for arg in args.items()]))
+    return res
+
+
 class App:
 
     def __init__(self):
@@ -770,9 +775,9 @@ class App:
 
                 cmd = actions[s].get(action_name) or actions["global"].get(action_name)
                 if cmd is None:
-                    args = [ "%s=%s" % (key,arg) for key, arg in args.items() ]
-                    print("keybindings: action %s(%s) bound to %s is not defined. Will be ignored." %
-                          (action_name, ", ".join(args), key), file=sys.stderr)
+                    print("keybindings: action %s bound to %s is not defined." %
+                          (format_action(action_name, args), key),
+                          "Will be ignored.", file=sys.stderr)
                     continue
                 action = action_name, cmd, args
 
