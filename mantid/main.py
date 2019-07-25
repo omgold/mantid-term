@@ -612,6 +612,11 @@ def action_reload_config(terminal):
 
 
 def action_new_tab(terminal, position=None, select=True, keep_open=False, command=None):
+    """opens a new terminal
+
+position (string): where to place the new tab in the order
+(can be "start", "end", "before", "after")
+"""
 
     if position == "start":
         index = 0
@@ -633,11 +638,19 @@ def action_new_tab(terminal, position=None, select=True, keep_open=False, comman
 
 
 def action_close_tab(terminal):
+    """closes the current tab and kill the attached process"""
+
     os.kill(terminal.pid, signal.SIGHUP)
     app.remove_terminal(terminal, 0)
 
 
 def action_select_tab(terminal, position=None):
+    """switches to another tab
+
+position (string): position of the tab to select
+(can be "first", "last", "previous", "next")
+"""
+
     terminal_count = len(app.terminals)
     if position == "first":
         index = 0
@@ -657,6 +670,12 @@ def action_select_tab(terminal, position=None):
 
 
 def action_move_tab(terminal, position=None):
+    """moves the active tab within the tab order
+
+position (string): where to place the tab in the order
+(can be "start", "end", "before", "after")
+"""
+
     terminal_count = len(app.terminals)
     if position == "start":
         index = 0
