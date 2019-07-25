@@ -35,10 +35,7 @@ def get_key_name(keyval, modifiers):
 def child_exited_cb(vte, status, terminal):
     if terminal.keep_open:
         return
-    app.terminals.remove(terminal)
-    if len(app.terminals) == 0:
-        Gtk.main_quit()
-        sys.exit(status//256)
+    app.remove_terminal(terminal, status)
 
 
 def exit_with_success(window):
@@ -951,6 +948,21 @@ class App:
     def add_terminal(self, keep_open):
         terminal = Terminal(keep_open)
         self.terminals.append(terminal)
+
+
+    def remove_terminal(self, terminal, status):
+        try:
+            pos = self.terminals.index(terminal)
+        except ValueError:
+            return
+        self.terminals.remove(terminal)
+        terminal_count = len(app.terminals)
+        if terminal_count == 0:
+            Gtk.main_quit()
+            sys.exit(status//256)
+        if pos == terminal_count:
+            pos -= 1
+        self.set_active_terminal(self.terminals[pos])
 
 
     def set_active_terminal(self, terminal):
