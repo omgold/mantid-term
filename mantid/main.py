@@ -241,6 +241,11 @@ class Terminal:
             shape_mode = Vte.CursorShape.BLOCK
         vte.set_cursor_shape(shape_mode)
 
+        scale_x = appearance["cell-width-scale"]
+        scale_y = appearance["cell-height-scale"]
+        vte.set_cell_width_scale(scale_x)
+        vte.set_cell_height_scale(scale_x)
+
 
     def run(self, cmd):
         env = os.environ.copy()
@@ -692,6 +697,8 @@ class App:
                 "show-scrollbar": True,
                 "cursor-blink": "system",
                 "cursor-shape": "block",
+                "cell-width-scale": 1.,
+                "cell-height-scale": 1.,
                 "icon": "terminal",
                 "font": "Monospace",
                 "colors": {},
