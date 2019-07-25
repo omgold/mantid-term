@@ -213,6 +213,8 @@ class Terminal:
         vte.set_scroll_on_keystroke(startup["scroll-on-keystroke"])
         vte.set_audible_bell(startup["audible-bell"])
         vte.set_mouse_autohide(appearance["mouse-autohide"])
+        vte.set_allow_bold(appearance["allow-bold"])
+        vte.set_bold_is_bright(appearance["bold-is-bright"])
 
         font = Pango.font_description_from_string(appearance["font"])
         vte.set_font(font)
@@ -736,6 +738,8 @@ class App:
                 "cursor-blink": "system",
                 "cursor-shape": "block",
                 "mouse-autohide": False,
+                "allow-bold": True,
+                "bold-is-bright": False,
                 "cell-width-scale": 1.,
                 "cell-height-scale": 1.,
                 "icon": "terminal",
