@@ -689,8 +689,19 @@ def css_validate(val):
     return True
 
 
+def quick_yaml_translate(value):
+    if value is True:
+        return "true"
+    elif value is False:
+        return "false"
+    elif value is None:
+        return "null"
+    return value
+
+
 def format_action(name,args):
-    res = "%s(%s)" % (name, ", ".join([ "%s=%s" % arg for arg in args.items()]))
+    res = "%s(%s)" % \
+    (name, ", ".join([ "%s=%s" % quick_yaml_translate(arg) for arg in args.items()]))
     return res
 
 
