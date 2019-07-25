@@ -585,6 +585,18 @@ toggle (bool): if true, toggle fullscreen mode
         app.window.unfullscreen()
 
 
+def action_reset_terminal(terminal, clear_scrollback=False):
+    """resets all state of the terminal
+
+clear_scrollback (bool): also clear the scrollback buffer
+"""
+
+    vte = terminal.vte
+    terminal.stop_select()
+    vte.reset(True, clear_scrollback)
+    terminal.normal_cursor_position = vte.get_cursor_position()
+
+
 def action_reload_config(terminal):
     """reload configuration file"""
 
@@ -602,6 +614,7 @@ actions = {
         "zoom": action_zoom,
         "scroll": action_scroll,
         "fullscreen": action_fullscreen,
+        "reset-terminal": action_reset_terminal,
         "reload-config": action_reload_config,
     },
     "normal": {
