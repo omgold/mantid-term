@@ -30,6 +30,9 @@ the user's home directory at *~/.config/mantid.yml* is loaded at startup.
 
 It contains the 3 sections *startup*, *appearance* and *keybindings*.
 
+To have any keybindings available, this file needs to be created first.
+Working examples (to be copied) can be found at /usr/share/mantid.
+
 # STARTUP
 
 The section *startup* contains defaults which will be applied on startup.
