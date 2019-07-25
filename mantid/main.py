@@ -211,6 +211,7 @@ class Terminal:
         vte.set_scrollback_lines(startup["scrollback-lines"])
         vte.set_scroll_on_output(startup["scroll-on-output"])
         vte.set_scroll_on_keystroke(startup["scroll-on-keystroke"])
+        vte.set_audible_bell(startup["audible-bell"])
 
         font = Pango.font_description_from_string(appearance["font"])
         vte.set_font(font)
@@ -727,6 +728,7 @@ class App:
                 "scrollback-lines": 1000,
                 "scroll-on-output": False,
                 "scroll-on-keystroke": True,
+                "audible-bell": False,
             },
             "appearance": {
                 "show-scrollbar": True,
