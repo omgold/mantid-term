@@ -203,7 +203,6 @@ class Terminal:
 
         self.panel_entry.hide()
         self.da.hide()
-        self.vte.grab_focus()
 
 
     def apply_config(self):
@@ -968,6 +967,7 @@ class App:
     def set_active_terminal(self, terminal):
         self.active_terminal = terminal
         self.window.add(terminal.panel_overlay)
+        terminal.vte.grab_focus()
         set_window_title()
 
 
