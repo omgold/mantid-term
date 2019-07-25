@@ -23,7 +23,6 @@ install:
                     ${DESTDIR}/usr/lib/mantid \
                     ${DESTDIR}/usr/share/man/man1
 	install -m 755 mantid-py ${DESTDIR}/usr/lib/mantid/mantid
-	install -m 755 mantid-py ${DESTDIR}/usr/bin
 	ln -sf ../lib/mantid/mantid ${DESTDIR}/usr/bin/mantid
 	$(MAKE) -C vte-ng install DESTDIR=${DESTDIR}
 	install -m 644 Mantid-1.0.typelib ${DESTDIR}/usr/lib/mantid/lib/girepository-1.0
