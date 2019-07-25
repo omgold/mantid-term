@@ -98,6 +98,22 @@ def get_entry_position_overlay_cb(overlay, entry, allocation):
 # def focus_cb():
 #    pass
 
+def set_window_title():
+    terminal = app.active_terminal
+    if app.title is None:
+        vte_title = terminal.vte.get_window_title()
+    else:
+        vte_title = app.title
+
+    terminal_count = len(app.terminals)
+    if terminal_count>1:
+        pos = app.terminals.index(terminal)
+        title = "%s [%i/%i]" % (vte_title, pos+1, terminal_count)
+    else:
+        title = vte_title
+    app.window.set_title(title)
+
+
 def alpha_screen_changed_cb(window):
     pass
 
@@ -108,15 +124,8 @@ def window_state_cb(vte, event):
 
 
 def window_title_cb(vte, terminal):
-    if app.dynamic_title and terminal == app.active_terminal:
-        vte_title = vte.get_window_title()
-        terminal_count = len(app.terminals)
-        if terminal_count>1:
-            pos = app.terminals.index(terminal)
-            title = "%s [%i/%i]" % (vte_title, pos+1, terminal_count)
-        else:
-            title = vte_title
-        vte.get_toplevel().set_title(title)
+    if terminal == app.active_terminal and app.title is None:
+        set_window_title()
 
 
 # def spawn_child_cb(pty, task, terminal):
@@ -661,6 +670,7 @@ default_config = {
         "audible-bell": False,
     },
     "appearance": {
+        "window-title": None,
         "show-scrollbar": True,
         "cursor-blink": "system",
         "cursor-shape": "block",
@@ -890,12 +900,9 @@ class App:
             window.set_role(self.args.role)
 
         if self.args.title is not None:
-            self.window.set_title(self.args.title)
-            self.dynamic_title = False
+            self.title = self.args.title
         else:
-            if self.active_terminal is not None:
-                window_title_cb(self.active_terminal.vte, self.active_terminal)
-            self.dynamic_title = True
+            self.title = appearance["window-title"]
 
         if self.args.icon is not None:
             icon = self.args.icon
@@ -949,6 +956,7 @@ class App:
     def set_active_terminal(self, terminal):
         self.active_terminal = terminal
         self.window.add(terminal.panel_overlay)
+        set_window_title()
 
 
     def find_keybinding(self, binding_map, event, debug_print=False):
