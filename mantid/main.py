@@ -1,5 +1,6 @@
 import sys
 import os
+import re
 import yaml
 import argparse
 
@@ -599,6 +600,19 @@ actions = {
     },
 }
 
+css_appearance = {
+    "cursor-aspect-ratio": ("vte-terminal", "-GtkWidget-cursor-aspect-ratio"),
+    "padding": ("box", "padding"),
+    "scrollbar-padding": ("scrollbar.mantid>contents>trough>slider", "border-width"),
+    "scrollbar-width": ("scrollbar.mantid>contents>trough>slider", "min-width"),
+}
+
+css_colors = {
+    "padding": ("box", "background-color"),
+    "scrollbar": ("scrollbar.mantid>contents>trough>slider", "background-color"),
+    "scrollbar-padding": ("scrollbar.mantid>contents", "background-color"),
+}
+
 
 def get_arg_parser(home_dir,
                    description="fully keyboard-controllable terminal inspired by termite"):
@@ -621,6 +635,18 @@ def get_arg_parser(home_dir,
                         action="store_true")
 
     return parser
+
+
+re_css_validate = re.compile("[:;{}>\"']")
+
+def css_validate(val):
+    if isinstance(val,(int,float)):
+        return True
+    if not isinstance(val, str):
+        return False
+    if re_css_validate.search(val):
+        return False
+    return True
 
 
 def format_action(name,args):
@@ -827,6 +853,33 @@ class App:
 
         for terminal in self.terminals:
             terminal.apply_config()
+
+
+        css = []
+
+        for name, dest in css_appearance.items():
+            value = appearance.get(name)
+            if value is None:
+                continue
+            if not css_validate(value):
+                print("appearance: %s value %s is not in valid format, skipping." %
+                      (name, value), file=sys.stderr)
+                continue
+            sel, attr = dest
+            entry = "%s { %s: %s; }" % (sel, attr, value)
+            css.append(entry)
+
+        colors = self.colors
+        for name, dest in css_colors.items():
+            value = colors.get(name)
+            if value is None:
+                continue
+            value = "#%02x%02x%02x" % (int(value.red*255), int(value.green*255), int(value.blue*255))
+            sel, attr = dest
+            entry = "%s { %s: %s; }" % (sel, attr, value)
+            css.append(entry)
+
+        self.style.load_from_data("\n".join(css).encode("utf-8"))
 
 
     def set_font_scale(self, scale):
