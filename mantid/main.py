@@ -969,6 +969,8 @@ class App:
 
 
     def set_active_terminal(self, terminal):
+        if self.active_terminal is not None:
+            self.window.remove(self.active_terminal.panel_overlay)
         self.active_terminal = terminal
         self.window.add(terminal.panel_overlay)
         terminal.vte.grab_focus()
