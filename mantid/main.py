@@ -134,13 +134,14 @@ class Terminal:
 
         self.vte = Vte.Terminal()
 
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        Gtk.StyleContext.add_class(hbox.get_style_context(),"mantid")
+        self.hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        Gtk.StyleContext.add_class(self.hbox.get_style_context(),"mantid")
 
         self.hint_overlay = Gtk.Overlay()
         self.hint_overlay.override_background_color(Gtk.StateFlags.NORMAL,transparent)
 
-        self.scrollbar = Gtk.Scrollbar.new(Gtk.Orientation.VERTICAL, self.vte.get_vadjustment())
+        self.scrollbar = Gtk.Scrollbar.new(Gtk.Orientation.VERTICAL,
+                                           self.vte.get_vadjustment())
 
         self.da = Gtk.DrawingArea()
         self.da.override_background_color(Gtk.StateFlags.NORMAL,transparent)
@@ -166,9 +167,9 @@ class Terminal:
 
         self.hint_overlay.add_overlay(self.da)
         self.hint_overlay.add(self.vte)
-        hbox.pack_start(self.hint_overlay, True, True, 0)
-        hbox.pack_start(self.scrollbar, False, False, 0)
-        self.panel_overlay.add(hbox)
+        self.hbox.pack_start(self.hint_overlay, True, True, 0)
+        self.hbox.pack_start(self.scrollbar, False, False, 0)
+        self.panel_overlay.add(self.hbox)
         # self.panel_overlay.add_overlay(self.panel_entry)
 
         self.panel_overlay.show_all()
@@ -187,7 +188,12 @@ class Terminal:
         startup = app.config["startup"]
         appearance = app.config["appearance"]
 
-        if appearance["show-scrollbar"]:
+        scrollbar_pos = appearance["show-scrollbar"]
+        if scrollbar_pos == True or scrollbar_pos == "right":
+            self.hbox.reorder_child(self.scrollbar, -1);
+            self.scrollbar.show()
+        elif scrollbar_pos == "left":
+            self.hbox.reorder_child(self.scrollbar, 0);
             self.scrollbar.show()
         else:
             self.scrollbar.hide()
