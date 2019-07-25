@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Mantid
+Comment=Keyboard-controllable terminal
+Exec=mantid
+Icon=utilities-terminal
+Type=Application
+Categories=GTK;System;TerminalEmulator;
+StartupNotify=true

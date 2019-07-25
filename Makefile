@@ -34,4 +34,6 @@ install:
 	install -m 755 -d ${DESTDIR}/usr/share/mantid
 	install -m 644 config/mantid.yml ${DESTDIR}/usr/share/mantid
 	install -m 644 mantid.1 ${DESTDIR}/usr/share/man/man1
+	install -m 755 -d ${DESTDIR}/usr/share/applications
+	install -m 644 mantid.desktop ${DESTDIR}/usr/share/applications
 	python3 -O -m compileall -d `./get-python-dir`/mantid ${DESTDIR}/`./get-python-dir`/mantid
