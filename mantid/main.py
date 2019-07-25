@@ -790,7 +790,7 @@ class App:
                 print("config: section", section_name, "needs to be a mapping. Will be ignored.", file=sys.stderr)
 
         self.colors = default_colors.copy()
-        self.colors.update( { key: rgba_parse(value)
+        self.colors.update( { key: None if value is None else rgba_parse(value)
                               for key, value in self.config["appearance"]["colors"].items() } )
 
         self.palette = default_palette.copy()
