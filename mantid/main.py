@@ -778,7 +778,7 @@ class App:
             if isinstance(cmd, str):
                 cmd = [ cmd ]
 
-        self.add_terminal(keep_open)
+        self.add_terminal(keep_open, 0)
         self.set_active_terminal(self.terminals[0])
 
         self.active_terminal.vte.set_size(startup["columns"], startup["rows"])
@@ -944,9 +944,10 @@ class App:
         self.font_scale = scale
 
 
-    def add_terminal(self, keep_open):
+    def add_terminal(self, keep_open, pos=None):
         terminal = Terminal(keep_open)
-        self.terminals.append(terminal)
+        self.terminals.insert(pos, terminal)
+        return terminal
 
 
     def remove_terminal(self, terminal, status):
