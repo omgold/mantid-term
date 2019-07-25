@@ -53,7 +53,7 @@ Most colors in the window can be customized. The format can be a name, e.g. blac
 
 The section *keybindings* has 3 subsections *global*, *normal* and *command*.
 *global* bindings apply both in normal mode and command mode, while *normal* and
-*command* bindings apply only the respective mode.
+*command* bindings apply only in the respective mode.
 
 A keybinding entry consists of the accelerator key description (in the format
 used by GDK 3.0) as the mapping key, and an action as the mapping value. The action
