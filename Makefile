@@ -1,3 +1,5 @@
+CC ?= gcc
+CXX ?= g++
 
 SOURCE_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 BUILD_DIR := ${PWD}
@@ -6,7 +8,7 @@ PYTHON_LIB_DIR := $(shell ${SOURCE_DIR}/get-python-dir)
 all: ${BUILD_DIR}/libmantid.so ${BUILD_DIR}/Mantid-1.0.typelib ${BUILD_DIR}/mantid.1
 
 ${BUILD_DIR}/libmantid.so: libmantid.c ${BUILD_DIR}/CACHEDIR.TAG
-	gcc -O2 -std=c99 -I ${BUILD_DIR}/vte-ng/src/ `pkg-config --cflags gtk+-3.0` -shared -fpic $< -o $@
+	${CC} -O2 -std=c99 -I ${BUILD_DIR}/vte-ng/src/ `pkg-config --cflags gtk+-3.0` -shared -fpic $< -o $@
 
 ${BUILD_DIR}/Mantid-1.0.typelib: Mantid-1.0.gir ${BUILD_DIR}/CACHEDIR.TAG
 	g-ir-compiler $< --includedir ${BUILD_DIR}/vte-ng/bindings/gir -o $@
@@ -22,7 +24,7 @@ ${SOURCE_DIR}/vte-ng/configure:
 ${BUILD_DIR}/vte-ng/Makefile: ${BUILD_DIR}/CACHEDIR.TAG ${SOURCE_DIR}/vte-ng/configure
 	mkdir -p ${BUILD_DIR}/vte-ng
 	cd ${BUILD_DIR}/vte-ng && \
-	${SOURCE_DIR}/vte-ng/configure --disable-static --disable-vala --disable-gtk-doc-html --with-gnutls --without-iconv --disable-glade --enable-introspection --prefix=/usr/lib/mantid
+	CC=${CC} CXX=${CXX} ${SOURCE_DIR}/vte-ng/configure --disable-static --disable-vala --disable-gtk-doc-html --with-gnutls --without-iconv --disable-glade --enable-introspection --prefix=/usr/lib/mantid
 
 vte-ng: ${BUILD_DIR}/vte-ng/Makefile ${BUILD_DIR}/CACHEDIR.TAG
 	$(MAKE) -C ${BUILD_DIR}/vte-ng
