@@ -3,7 +3,11 @@
 set -o pipefail
 
 SOURCE_DIR=$(dirname "$(realpath "$BASH_SOURCE")")
-export GI_TYPELIB_PATH="$SOURCE_DIR/vte-ng/bindings/gir:$SOURCE_DIR"
-export LD_LIBRARY_PATH="$SOURCE_DIR/vte-ng/src/.libs:$SOURCE_DIR"
+BUILD_DIR="$(realpath "$PWD")"
+export GI_TYPELIB_PATH="$BUILD_DIR/vte-ng/bindings/gir:$BUILD_DIR"
+export LD_LIBRARY_PATH="$BUILD_DIR/vte-ng/src/.libs:$BUILD_DIR"
 
-python3 -c 'from mantid.doc import generate_scdoc; generate_scdoc()' | scdoc >mantid.1
+{
+    cd "$SOURCE_DIR"
+    python3 -c 'from mantid.doc import generate_scdoc; generate_scdoc()'
+} | scdoc >mantid.1
