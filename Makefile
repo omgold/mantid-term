@@ -38,6 +38,10 @@ ${BUILD_DIR}/CACHEDIR.TAG:
 	echo 'Signature: 8a477f597d28d172789f06886806bc55' >${BUILD_DIR}/CACHEDIR.TAG
 
 install:
+	if [ -z ${PYTHON_LIB_DIR} ]; then \
+		echo "cannot determine python install dir"; \
+	    exit 1; \
+    fi
 	install -m 755 -d ${DESTDIR}/usr/bin \
                     ${DESTDIR}/usr/lib/mantid \
                     ${DESTDIR}/usr/share/man/man1
