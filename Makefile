@@ -65,7 +65,7 @@ install:
 	install -m 644 mantid/*.py ${DESTDIR}/${PYTHON_LIB_DIR}/mantid
 	install -m 755 ${BUILD_DIR}/libmantid.so ${DESTDIR}/usr/lib/mantid/lib
 	install -m 755 -d ${DESTDIR}/usr/share/mantid
-	install -m 644 config/mantid.yml ${DESTDIR}/usr/share/mantid
+	install -m 644 config/mantid*.yml ${DESTDIR}/usr/share/mantid
 	install -m 644 ${BUILD_DIR}/mantid.1 ${DESTDIR}/usr/share/man/man1
 	install -m 755 -d ${DESTDIR}/usr/share/applications
 	install -m 644 mantid.desktop ${DESTDIR}/usr/share/applications
