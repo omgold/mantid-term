@@ -1,9 +1,11 @@
 #!/bin/bash
 
 SOURCE_DIR=$(dirname "$(realpath "$BASH_SOURCE")")
+BUILD_DIR="$(realpath "$PWD")"
 export __MANTID__GI_TYPELIB_PATH=$GI_TYPELIB_PATH
 export __MANTID__LD_LIBRARY_PATH=$LD_LIBRARY_PATH
-export GI_TYPELIB_PATH="$SOURCE_DIR/vte-ng/bindings/gir:$SOURCE_DIR"
-export LD_LIBRARY_PATH="$SOURCE_DIR/vte-ng/src/.libs:$SOURCE_DIR"
+export GI_TYPELIB_PATH="$BUILD_DIR/vte-ng/bindings/gir:$BUILD_DIR"
+export LD_LIBRARY_PATH="$BUILD_DIR/vte-ng/src/.libs:$BUILD_DIR"
 
+cd "$SOURCE_DIR"
 exec python3 -c 'from mantid.main import main; main()' "$@"
