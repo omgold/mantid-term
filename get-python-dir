@@ -1,3 +1,5 @@
 #!/bin/bash
 
+set -o pipefail
+
 pkg-config python3 --print-provides | sed -rne 's#^python3 = (.*)$#/usr/lib/python\1/site-packages#p'
