@@ -30,7 +30,7 @@ ${BUILD_DIR}/mantid.1: mantid/*.py ${BUILD_DIR}/Mantid-1.0.typelib ${BUILD_DIR}/
 	cd ${BUILD_DIR} && ${SOURCE_DIR}/gen-man
 
 ${SOURCE_DIR}/vte-ng/configure:
-	cd ${BUILD_DIR}/vte-ng && NOCONFIGURE=1  ${SOURCE_DIR}/vte-ng/autogen.sh
+	NOCONFIGURE=1 ${SOURCE_DIR}/vte-ng/autogen.sh
 
 ${BUILD_DIR}/vte-ng/Makefile: ${BUILD_DIR}/CACHEDIR.TAG ${SOURCE_DIR}/vte-ng/configure
 	mkdir -p ${BUILD_DIR}/vte-ng
