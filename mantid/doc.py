@@ -173,7 +173,7 @@ def generate_scdoc():
     usage = "\n".join([line[7:] for line in raw_usage.split('\n') ])
     options = parser.format_help()[len(raw_usage):]
 
-    f = open("config/mantid.yml","r")
+    f = open("config/mantid-vi.yml","r")
     config_example = f.read()
 
     actions = {}
