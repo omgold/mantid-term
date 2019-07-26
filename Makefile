@@ -1,3 +1,4 @@
+RPM_VERSION=1.0-1
 CC ?= gcc
 CXX ?= g++
 
@@ -6,6 +7,16 @@ BUILD_DIR := ${PWD}
 PYTHON_LIB_DIR := $(shell ${SOURCE_DIR}/get-python-dir)
 
 all: ${BUILD_DIR}/libmantid.so ${BUILD_DIR}/Mantid-1.0.typelib ${BUILD_DIR}/mantid.1
+
+.PHONY: rpm srpm
+
+rpm: srpm
+	rpmbuild --rebuild ${HOME}/rpmbuild/SRPMS/mantid-term-${RPM_VERSION}.src.rpm
+
+srpm:
+	mkdir -p ${HOME}/rpmbuild/SOURCES
+	tar --exclude=.git --exclude-caches-all -zcvf ${HOME}/rpmbuild/SOURCES/mantid-1.0.tar.gz .
+	rpmbuild -bs rpm/mantid.spec
 
 ${BUILD_DIR}/libmantid.so: libmantid.c ${BUILD_DIR}/CACHEDIR.TAG
 	${CC} -O2 -std=c99 -I ${BUILD_DIR}/vte-ng/src/ `pkg-config --cflags gtk+-3.0` -shared -fpic $< -o $@
