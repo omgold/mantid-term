@@ -1,0 +1,107 @@
+startup:
+    term: xterm-256color
+    # shell: [/bin/bash]
+    rows: 30
+    columns: 100
+    font-scale: 1
+    fullscreen: false
+    scrollback-lines: 1000
+    audible-bell: false
+    scroll-on-output: true
+    scroll-on-keystroke: true
+
+appearance:
+    font: Monospace 9
+    cursor-blink: system
+    show-scrollbar: right
+    allow-bold: true
+    bold-is-bright: false
+    mouse-autohide: false
+    icon: terminal
+    cursor-shape: block
+    # cursor-aspect-ratio: 0.1
+    cell-height-scale: 1.
+    cell-width-scale: 1.
+    # padding: 5px
+    # scrollbar-padding: 5px
+    scrollbar-width: 8pt
+    colors:
+        foreground: white
+        #foreground-bold: gray
+        background: black
+        # cursor: black
+        # cursor-foreground: black
+        highlight: darkgray
+        # highlight-foreground: white
+        # 0: '#000000'
+        # 1: '#880000'
+        # 2: '#006600'
+        # 3: '#503000'
+        # 4: '#000077'
+        # 5: '#600060'
+        # 6: '#005555'
+        # 7: '#d0d0d0'
+        # 8: '#555555'
+        # 9: '#ffaaaa'
+        # 10: '#88ff88'
+        # 11: '#ffff55'
+        # 12: '#b4baf0'
+        # 13: '#ffbbff'
+        # 14: '#aaffff'
+        # 15: '#ffffff'
+
+keybindings:
+    global:
+        <Ctrl>equal: {action: zoom, set: 1}
+        <Ctrl>plus: {action: zoom, change: 0.1}
+        <Ctrl>minus: {action: zoom, change: -0.1}
+        <Ctrl><Shift>Up: {action: scroll, y: -1}
+        <Ctrl><Shift>Down: {action: scroll, y: 1}
+        <Shift>Page_Up: {action: scroll, screen: -0.5}
+        <Shift>Page_Down: {action: scroll, screen: 0.5}
+        F11: {action: fullscreen, set: null, toggle: true}
+        <Ctrl><Shift>r: reload-config
+        <Ctrl><Shift>t: new-tab
+        <Ctrl><Shift>w: {action: close-tab}
+        <Ctrl>Page_Up: {action: select-tab, position: previous}
+        <Ctrl>Page_Down: {action: select-tab, position: next}
+        <Ctrl><Shift>Page_Up: {action: move-tab, position: before}
+        <Ctrl><Shift>Page_Down: {action: move-tab, position: after}
+    normal:
+        <Control><Shift>space: enter-command-mode
+        <Ctrl><Shift>v: {action: paste-selection, src: clipboard}
+        <Ctrl><Shift>l: {action: reset-terminal, clear_scrollback: true}
+    command:
+        Escape: leave-command-mode
+        q: leave-command-mode
+        Left: {action: move, x: -1}
+        h: {action: move, x: -1}
+        Right: {action: move, x: 1}
+        l: {action: move, x: 1}
+        Up: {action: move, y: -1}
+        j: {action: move, y: -1}
+        Down: {action: move, y: 1}
+        k: {action: move, y: 1}
+        <Ctrl>u: {action: move, screen: -0.5}
+        <Ctrl>d: {action: move, screen: 0.5}
+        <Ctrl>b: {action: move, screen: -1}
+        <Ctrl>f: {action: move, screen: 1}
+        Home: {action: move-regexp, regexp: ^, backward: true}
+        '0': {action: move-regexp, regexp: ^, backward: true}
+        End: {action: move-regexp, regexp: $}
+        dollar: {action: move-regexp, regexp: $}
+        asciicircum: {action: move-regexp, regexp: '^\s*', backward: true, after: true}
+        <Shift>Left: {action: move-regexp, regexp: '^(\W|$)|\w+', backward: true}
+        b:           {action: move-regexp, regexp: '^(\W|$)|\w+', backward: true}
+        <Shift>Right: {action: move-regexp, regexp: '\w+|$'}
+        w:            {action: move-regexp, regexp: '\w+|$'}
+        e:            {action: move-regexp, regexp: '\w+|$', after: true}
+        <Ctrl>Left: {action: move-regexp, regexp: '^(\s|$)|\S+', backward: true}
+        <Shift>b:   {action: move-regexp, regexp: '^(\s|$)|\S+', backward: true}
+        <Ctrl>Right: {action: move-regexp, regexp: '\S+|$'}
+        <Shift>w:    {action: move-regexp, regexp: '\S+|$'}
+        <Shift>e: {action: move-regexp, regexp: '\S+|$', after: true}
+        v: start-select
+        <Shift>v: {action: start-select, mode: line}
+        <Ctrl>v: {action: start-select, mode: block}
+        y: yank-selection
