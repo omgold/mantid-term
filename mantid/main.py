@@ -425,10 +425,12 @@ column (float): multiples of screen width to move
 
     if screen != 0:
         dest_y += vte.get_row_count() * screen
-    if dest_y < 0:
-        dest_y = 0
-        dest_x = 0
-    else:
+    if dest_y < cursor_row:
+        first_row = adjustment.get_lower()
+        if dest_y < first_row:
+            dest_y = first_row
+            dest_x = 0
+    elif dest_y > cursor_row:
         row_count = adjustment.get_upper()
         if dest_y >= row_count:
             dest_y = row_count-1
