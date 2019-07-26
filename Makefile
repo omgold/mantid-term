@@ -69,4 +69,4 @@ install:
 	install -m 644 ${BUILD_DIR}/mantid.1 ${DESTDIR}/usr/share/man/man1
 	install -m 755 -d ${DESTDIR}/usr/share/applications
 	install -m 644 mantid.desktop ${DESTDIR}/usr/share/applications
-	python3 -O -m compileall -d `./get-python-dir`/mantid ${DESTDIR}/`./get-python-dir`/mantid
+	python3 -O -m compileall -d ${PYTHON_LIB_DIR}/mantid ${DESTDIR}/${PYTHON_LIB_DIR}/mantid
