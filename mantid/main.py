@@ -1144,6 +1144,7 @@ class App:
 def main():
 #if __name__ == "__main__":
     global app
+    Gtk.init()
     app = App()
     app.setup()
     Gtk.main()
