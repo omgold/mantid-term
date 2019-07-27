@@ -1,7 +1,7 @@
 Summary: keyboard-controllable terminal emulator
 Name:    mantid-term
 Version: 1.0
-Release: 1
+Release: 1%{dist}
 Packager: Oliver Mangold
 URL: https://github.com/omgold/mantid-term/
 Source0: %{name}-%{version}.tar.gz
