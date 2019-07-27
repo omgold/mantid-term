@@ -4,7 +4,7 @@ Version: 1.0
 Release: 1
 Packager: Oliver Mangold
 URL: https://github.com/omgold/mantid-term/
-Source0: mantid-%{version}.tar.gz
+Source0: %{name}-%{version}.tar.gz
 
 %define debug_package %{nil}
 
