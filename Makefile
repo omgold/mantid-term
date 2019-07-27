@@ -1,21 +1,22 @@
-RPM_VERSION=1.0-1
 CC ?= gcc
 CXX ?= g++
 
 SOURCE_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 BUILD_DIR := ${PWD}
 PYTHON_LIB_DIR := $(shell ${SOURCE_DIR}/get-python-dir)
+RPM_NAME := $(shell rpm -q --qf %{NAME}-%{VERSION} --specfile rpm/mantid.spec)
+RPM_NAME_RELEASE := $(shell rpm -q --qf %{NAME}-%{VERSION}-%{RELEASE} --specfile rpm/mantid.spec)
 
 all: ${BUILD_DIR}/libmantid.so ${BUILD_DIR}/Mantid-1.0.typelib ${BUILD_DIR}/mantid.1
 
 .PHONY: rpm srpm
 
 rpm: srpm
-	rpmbuild --rebuild ${HOME}/rpmbuild/SRPMS/mantid-term-${RPM_VERSION}.src.rpm
+	rpmbuild --rebuild ${HOME}/rpmbuild/SRPMS/${RPM_NAME_RELEASE}.src.rpm
 
 srpm:
 	mkdir -p ${HOME}/rpmbuild/SOURCES
-	tar --exclude=.git --exclude-caches-all -zcvf ${HOME}/rpmbuild/SOURCES/mantid-1.0.tar.gz .
+	tar --exclude=.git --exclude-caches-all -zcvf ${HOME}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz .
 	rpmbuild -bs rpm/mantid.spec
 
 ${BUILD_DIR}/libmantid.so: libmantid.c ${BUILD_DIR}/CACHEDIR.TAG
