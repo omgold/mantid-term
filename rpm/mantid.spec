@@ -8,6 +8,8 @@ Source0: %{name}-%{version}.tar.gz
 License: GPL 2/3
 Group: System
 
+Autoreq: 0
+Autoprov: 0
 %define debug_package %{nil}
 
 %if 0%{?rhel:1}
