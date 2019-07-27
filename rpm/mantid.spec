@@ -20,6 +20,10 @@ BuildRequires: gcc gcc-c++
 %endif
 
 Requires: gtk3 gnutls pcre2
+%if 0%{?suse_version:1}
+%define python3_pkgversion 3
+%endif
+
 Requires: python%{python3_pkgversion}
 Requires: python%{python3_pkgversion}-gobject gobject-introspection
 Requires: python%{python3_pkgversion}-PyYAML python%{python3_pkgversion}-gobject
