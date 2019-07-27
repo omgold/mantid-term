@@ -7,7 +7,8 @@ def rgba_parse( description ):
     return result
 
 
-transparent = Gdk.RGBA(0, 0, 0, 0)
+transparent = rgba_parse("rgba(0,0,0,0)")
+
 default_palette = [ rgba_parse(name) for name in [
     '#000000',
     '#800000',
@@ -268,6 +269,6 @@ default_palette = [ rgba_parse(name) for name in [
 ] ]
 
 default_colors = {
-    "foreground": Gdk.RGBA(1., 1., 1.),
-    "background": Gdk.RGBA(0., 0., 0.),
+    "foreground": rgba_parse("#ffffff"),
+    "background": rgba_parse("#000000"),
 }
