@@ -8,7 +8,7 @@ Source0: mantid-%{version}.tar.gz
 
 %define debug_package %{nil}
 
-%if %{rhel}
+%if 0%{?rhel:1}
 %define _buildutils /opt/rh/devtoolset-8
 BuildRequires: devtoolset-8-gcc devtoolset-8-gcc-c++
 %else
@@ -38,7 +38,7 @@ Mantid is a xterm-compatible terminal emulator based on Vte-ng, similar to termi
 %build
 mkdir build
 cd build
-%if %{?_buildutils:1}
+%if 0%{?_buildutils:1}
 bash -c '. %{_buildutils}/enable && make %{?_smp_mflags} -C .. vte-ng'
 %else
 make -C .. %{?_smp_mflags} vte-ng
