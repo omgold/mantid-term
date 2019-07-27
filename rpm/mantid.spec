@@ -19,8 +19,9 @@ Requires: gtk3 gnutls pcre2
 Requires: python%{python3_pkgversion}
 Requires: python%{python3_pkgversion}-gobject gobject-introspection
 Requires: python%{python3_pkgversion}-PyYAML python%{python3_pkgversion}-gobject
-BuildRequires: gtk3 gtk3-devel gnutls gnutls-devel pcre2 pcre2-devel
-BuildRequires: intltool scdoc pkgconfig sed
+BuildRequires: gtk3 gtk3-devel gtk-doc gnutls gnutls-devel pcre2 pcre2-devel
+BuildRequires: gobject-introspection-devel
+BuildRequires: libtool intltool scdoc pkgconfig sed
 BuildRequires: python%{python3_pkgversion} python%{python3_pkgversion}-devel
 BuildRequires: python%{python3_pkgversion}-gobject gobject-introspection
 BuildRequires: python%{python3_pkgversion}-PyYAML python%{python3_pkgversion}-gobject
