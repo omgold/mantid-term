@@ -5,6 +5,8 @@ Release: 1%{?dist}
 Packager: Oliver Mangold
 URL: https://github.com/omgold/mantid-term/
 Source0: %{name}-%{version}.tar.gz
+License: GPL 2/3
+Group: System
 
 %define debug_package %{nil}
 
@@ -25,9 +27,6 @@ BuildRequires: libtool intltool scdoc pkgconfig sed
 BuildRequires: python%{python3_pkgversion} python%{python3_pkgversion}-devel
 BuildRequires: python%{python3_pkgversion}-gobject gobject-introspection
 BuildRequires: python%{python3_pkgversion}-PyYAML python%{python3_pkgversion}-gobject
-
-License: GPL 2/3
-Group: System
 
 #==============================================================
 %description
