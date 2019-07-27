@@ -19,15 +19,21 @@ BuildRequires: devtoolset-8-gcc devtoolset-8-gcc-c++
 BuildRequires: gcc gcc-c++
 %endif
 
-Requires: gtk3 gnutls pcre2
+Requires: gtk3 gnutls
+
 %if 0%{?suse_version:1}
+Requires: libpcre2-8-0
+BuildRequires: libpcre2-8-0
 %define python3_pkgversion 3
+%else
+Requires: pcre2
+BuildRequires: pcre2
 %endif
 
 Requires: python%{python3_pkgversion}
 Requires: python%{python3_pkgversion}-gobject gobject-introspection
 Requires: python%{python3_pkgversion}-PyYAML python%{python3_pkgversion}-gobject
-BuildRequires: gtk3 gtk3-devel gtk-doc gnutls gnutls-devel pcre2 pcre2-devel
+BuildRequires: gtk3 gtk3-devel gtk-doc gnutls gnutls-devel pcre2-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: libtool intltool scdoc pkgconfig sed
 BuildRequires: python%{python3_pkgversion} python%{python3_pkgversion}-devel
