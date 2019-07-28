@@ -1,5 +1,4 @@
-#!/bin/bash
+#!/usr/bin/python3
 
-set -o pipefail
-
-pkg-config python3 --print-provides | sed -rne 's#^python3 = (.*)$#/usr/lib/python\1/site-packages#p'
+from distutils.sysconfig import get_python_lib
+print(get_python_lib())
