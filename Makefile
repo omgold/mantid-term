@@ -1,8 +1,8 @@
 CC ?= gcc
 CXX ?= g++
 
-SOURCE_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-BUILD_DIR := ${PWD}
+SOURCE_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+BUILD_DIR := $(realpath ${PWD})/
 PYTHON_LIB_DIR := $(shell ${SOURCE_DIR}/get-python-dir)
 RPM_NAME := $(shell rpm -q --qf %{NAME}-%{VERSION} --specfile rpm/mantid.spec)
 RPM_NAME_RELEASE := $(shell rpm -q --qf %{NAME}-%{VERSION}-%{RELEASE} --specfile rpm/mantid.spec)
@@ -43,8 +43,8 @@ vte-ng: ${BUILD_DIR}/vte-ng/Makefile ${BUILD_DIR}/CACHEDIR.TAG
 	cp ${SOURCE_DIR}/vte-ng/src/vte/*.h ${BUILD_DIR}/vte-ng/src/vte/
 
 ${BUILD_DIR}/CACHEDIR.TAG:
-	if [ ${SOURCE_DIR} == ${BUILD_DIR} ]; then \
-		echo "refusing to build in source tree"; \
+	if [ "${SOURCE_DIR}" = "${BUILD_DIR}" ]; then \
+	    echo "refusing to build in source tree"; \
 	    exit 1; \
 	fi
 	echo 'Signature: 8a477f597d28d172789f06886806bc55' >${BUILD_DIR}/CACHEDIR.TAG
