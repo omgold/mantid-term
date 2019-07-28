@@ -1,6 +1,7 @@
 CC ?= gcc
 CXX ?= g++
 
+VERSION := $(shell cat VERSION)
 SOURCE_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 BUILD_DIR ?= $(realpath ${PWD})/
 PYTHON_LIB_DIR := $(shell ${SOURCE_DIR}/get-python-dir)
