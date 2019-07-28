@@ -17,10 +17,17 @@ git submodule update
 
 make rpm
 
+### DEB-based distros
+
+git clone https://github.com/omgold/mantid-term.git mantid
+
+cd mantid
+
+git submodule init
+git submodule update
+
+make deb
+
 ### Arch Linux
 
 A PKGBUILD is available at AUR named mantid-term
-
-### DEB-based distros
-
-TODO...
