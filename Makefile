@@ -2,7 +2,7 @@ CC ?= gcc
 CXX ?= g++
 
 SOURCE_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
-BUILD_DIR := $(realpath ${PWD})/
+BUILD_DIR ?= $(realpath ${PWD})/
 PYTHON_LIB_DIR := $(shell ${SOURCE_DIR}/get-python-dir)
 RPM_NAME := $(shell rpm -q --qf %{NAME}-%{VERSION} --specfile rpm/mantid.spec)
 RPM_NAME_RELEASE := $(shell rpm -q --qf %{NAME}-%{VERSION}-%{RELEASE} --specfile rpm/mantid.spec)
