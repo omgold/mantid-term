@@ -7,6 +7,8 @@ BUILD_DIR ?= $(realpath ${PWD})/
 PYTHON_LIB_DIR := $(shell ${SOURCE_DIR}/get-python-dir)
 RPM_NAME = $(shell rpm -q --qf %{NAME}-%{VERSION} --specfile rpm/mantid.spec)
 RPM_NAME_RELEASE = $(shell rpm -q --qf %{NAME}-%{VERSION}-%{RELEASE} --specfile rpm/mantid.spec)
+DEB_DISTRO_NAME = $(shell lsb_release -c -s)
+DEB_BUILD_DIR = debbuild/mantid-term_${VERSION}
 
 all: ${BUILD_DIR}/libmantid.so ${BUILD_DIR}/Mantid-1.0.typelib ${BUILD_DIR}/mantid.1
 
@@ -19,6 +21,35 @@ srpm:
 	mkdir -p ${HOME}/rpmbuild/SOURCES
 	tar --exclude=.git --exclude-caches-all -zcvf ${HOME}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz .
 	rpmbuild -bs rpm/mantid.spec
+
+
+deb: debbuild/mantid-term_${VERSION}
+	cd ${DEB_BUILD_DIR} && dpkg-buildpackage -uc -us
+
+
+srcdeb: debbuild/mantid-term_${VERSION}
+	cd ${DEB_BUILD_DIR} && dpkg-buildpackage -S -uc -us
+
+
+${DEB_BUILD_DIR}.orig.tar.gz:
+	mkdir -p debbuild
+	echo 'Signature: 8a477f597d28d172789f06886806bc55' >debbuild/CACHEDIR.TAG
+	tar --exclude=.git --exclude-caches-all -zcvf $@ .
+
+
+.PHONY: ${DEB_BUILD_DIR}
+
+${DEB_BUILD_DIR}: ${DEB_BUILD_DIR}.orig.tar.gz
+	rm -rf $@
+	mkdir -p $@
+	tar --exclude=.git --exclude-caches-all -C $@ -xvf $@.orig.tar.gz
+	if [ -z "${DEB_DISTRO_NAME}" ]; then \
+	    echo error: could not determine debian distro name. >&2 ; \
+	    echo        is lsb_release installed? >&2 ; \
+	    exit 1; \
+	fi
+	sed -i -re 's#__DISTRO__#${DEB_DISTRO_NAME}#' ${DEB_BUILD_DIR}/debian/changelog
+
 
 ${BUILD_DIR}/libmantid.so: libmantid.c ${BUILD_DIR}/CACHEDIR.TAG
 	${CC} -O2 -std=c99 -I ${BUILD_DIR}/vte-ng/src/ `pkg-config --cflags gtk+-3.0` -shared -fpic $< -o $@
