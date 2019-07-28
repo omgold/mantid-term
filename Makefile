@@ -10,9 +10,11 @@ RPM_NAME_RELEASE = $(shell rpm -q --qf %{NAME}-%{VERSION}-%{RELEASE} --specfile 
 DEB_DISTRO_NAME = $(shell lsb_release -c -s)
 DEB_BUILD_DIR = debbuild/mantid-term_${VERSION}
 
+
 all: ${BUILD_DIR}/libmantid.so ${BUILD_DIR}/Mantid-1.0.typelib ${BUILD_DIR}/mantid.1
 
 .PHONY: rpm srpm
+
 
 rpm: srpm
 	rpmbuild --rebuild ${HOME}/rpmbuild/SRPMS/${RPM_NAME_RELEASE}.src.rpm
