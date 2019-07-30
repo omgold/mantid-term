@@ -39,7 +39,10 @@ ${DEB_BUILD_DIR}.orig.tar.gz:
 	tar --exclude=.git --exclude-caches-all -zcvf $@ .
 
 
-.PHONY: ${DEB_BUILD_DIR}
+.PHONY: deb-build-deps ${DEB_BUILD_DIR}
+
+deb-build-deps: ${DEB_BUILD_DIR}
+	cd ${DEB_BUILD_DIR} && mk-build-deps
 
 ${DEB_BUILD_DIR}: ${DEB_BUILD_DIR}.orig.tar.gz
 	rm -rf $@
