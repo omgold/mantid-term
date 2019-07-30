@@ -25,11 +25,11 @@ srpm:
 	rpmbuild -bs rpm/mantid.spec
 
 
-deb: debbuild/mantid-term_${VERSION}
+deb: ${DEB_BUILD_DIR}
 	cd ${DEB_BUILD_DIR} && dpkg-buildpackage -uc -us
 
 
-srcdeb: debbuild/mantid-term_${VERSION}
+srcdeb: ${DEB_BUILD_DIR}
 	cd ${DEB_BUILD_DIR} && dpkg-buildpackage -S -uc -us
 
 
