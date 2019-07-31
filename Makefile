@@ -9,7 +9,8 @@ RPM_SPECFILE := rpm/mantid-term.spec
 RPM_NAME = $(shell rpm -q --qf %{NAME}-${VERSION} --specfile ${RPM_SPECFILE})
 RPM_NAME_RELEASE = $(shell rpm -q --qf %{NAME}-${VERSION}-%{RELEASE} --specfile ${RPM_SPECFILE})
 DEB_DISTRO_NAME = $(shell lsb_release -c -s)
-DEB_BUILD_DIR = debbuild/mantid-term_${VERSION}
+DEB_BUILD_DIR := debbuild
+DEB_BUILD_TREE := ${DEB_BUILD_DIR}/mantid-term_${VERSION}
 ARCH_BUILD_DIR := archbuild
 RPM_BUILD_DIR := rpmbuild
 
@@ -40,35 +41,35 @@ ${ARCH_BUILD_DIR}/mantid-term.tar.gz:
 	echo 'Signature: 8a477f597d28d172789f06886806bc55' >${ARCH_BUILD_DIR}/CACHEDIR.TAG
 	tar --transform='s/^./mantid-term/' --exclude=.git --exclude-caches-all -zcvf $@ .
 
-deb: ${DEB_BUILD_DIR}
-	cd ${DEB_BUILD_DIR} && dpkg-buildpackage -uc -us
+deb: ${DEB_BUILD_TREE}
+	cd ${DEB_BUILD_TREE} && dpkg-buildpackage -uc -us
 
 
-srcdeb: ${DEB_BUILD_DIR}
-	cd ${DEB_BUILD_DIR} && dpkg-buildpackage -S -uc -us
+srcdeb: ${DEB_BUILD_TREE}
+	cd ${DEB_BUILD_TREE} && dpkg-buildpackage -S -uc -us
 
 
-${DEB_BUILD_DIR}.orig.tar.gz:
-	mkdir -p debbuild
-	echo 'Signature: 8a477f597d28d172789f06886806bc55' >debbuild/CACHEDIR.TAG
+${DEB_BUILD_TREE}.orig.tar.gz:
+	mkdir -p ${DEB_BUILD_DIR}
+	echo 'Signature: 8a477f597d28d172789f06886806bc55' >${DEB_BUILD_DIR}/CACHEDIR.TAG
 	tar --exclude=.git --exclude-caches-all -zcvf $@ .
 
 
-.PHONY: deb-build-deps ${DEB_BUILD_DIR}
+.PHONY: deb-build-deps ${DEB_BUILD_TREE}
 
-deb-build-deps: ${DEB_BUILD_DIR}
-	cd ${DEB_BUILD_DIR} && mk-build-deps
+deb-build-deps: ${DEB_BUILD_TREE}
+	cd ${DEB_BUILD_TREE} && mk-build-deps
 
-${DEB_BUILD_DIR}: ${DEB_BUILD_DIR}.orig.tar.gz
+${DEB_BUILD_TREE}: ${DEB_BUILD_TREE}.orig.tar.gz
 	rm -rf $@
 	mkdir -p $@
-	tar --exclude=.git --exclude-caches-all -C $@ -xvf $@.orig.tar.gz
+	tar --exclude=.git --exclude-caches-all -C $@ -xvf $<
 	if [ -z "${DEB_DISTRO_NAME}" ]; then \
 	    echo error: could not determine debian distro name. >&2 ; \
 	    echo        is lsb_release installed? >&2 ; \
 	    exit 1; \
 	fi
-	sed -i -re 's#__DISTRO__#${DEB_DISTRO_NAME}#' ${DEB_BUILD_DIR}/debian/changelog
+	sed -i -re 's#__DISTRO__#${DEB_DISTRO_NAME}#' ${DEB_BUILD_TREE}/debian/changelog
 
 
 ${BUILD_DIR}/libmantid.so: libmantid.c ${BUILD_DIR}/CACHEDIR.TAG
