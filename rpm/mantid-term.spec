@@ -1,6 +1,6 @@
 Summary: keyboard-controllable terminal emulator
 Name:    mantid-term
-Version: 1.0.0
+Version: __VERSION__
 Release: 1%{?dist}
 Packager: Oliver Mangold
 URL: https://github.com/omgold/mantid-term/
@@ -75,5 +75,5 @@ make -C .. install DESTDIR=%{buildroot}
 #==============================================================
 
 %changelog
-* Fri Jul 26 2019 NEC HPCE OM -> 1.0
+* Fri Jul 26 2019 Oliver Mangold -> 1.0
 - initial version

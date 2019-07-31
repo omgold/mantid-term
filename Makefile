@@ -5,10 +5,12 @@ VERSION := $(shell cat VERSION)
 SOURCE_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 BUILD_DIR ?= $(realpath ${PWD})/
 PYTHON_LIB_DIR := $(shell ${SOURCE_DIR}/get-python-dir)
-RPM_NAME = $(shell rpm -q --qf %{NAME}-%{VERSION} --specfile rpm/mantid.spec)
-RPM_NAME_RELEASE = $(shell rpm -q --qf %{NAME}-%{VERSION}-%{RELEASE} --specfile rpm/mantid.spec)
+RPM_SPECFILE := rpm/mantid-term.spec
+RPM_NAME = $(shell rpm -q --qf %{NAME}-${VERSION} --specfile ${RPM_SPECFILE})
+RPM_NAME_RELEASE = $(shell rpm -q --qf %{NAME}-${VERSION}-%{RELEASE} --specfile ${RPM_SPECFILE})
 DEB_DISTRO_NAME = $(shell lsb_release -c -s)
 DEB_BUILD_DIR = debbuild/mantid-term_${VERSION}
+RPM_BUILD_DIR = rpmbuild
 
 
 all: ${BUILD_DIR}/libmantid.so ${BUILD_DIR}/Mantid-1.0.typelib ${BUILD_DIR}/mantid.1
@@ -20,9 +22,10 @@ rpm: srpm
 	rpmbuild --rebuild ${HOME}/rpmbuild/SRPMS/${RPM_NAME_RELEASE}.src.rpm
 
 srpm:
-	mkdir -p ${HOME}/rpmbuild/SOURCES
+	mkdir -p ${HOME}/rpmbuild/{SPECS,SOURCES}
+	sed -re 's#__VERSION__#${VERSION}#' ${RPM_SPECFILE} >${HOME}/rpmbuild/SPECS/mantid-term.spec
 	tar --exclude=.git --exclude-caches-all -zcvf ${HOME}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz .
-	rpmbuild -bs rpm/mantid.spec
+	rpmbuild -bs ${HOME}/rpmbuild/SPECS/mantid-term.spec
 
 
 deb: ${DEB_BUILD_DIR}
