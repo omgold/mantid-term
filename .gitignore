@@ -2,3 +2,5 @@ __pycache__
 *.so
 *.typelib
 mantid.1
+/debbuild
+/archbuild
