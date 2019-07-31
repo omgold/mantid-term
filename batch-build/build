@@ -1,0 +1,29 @@
+#!/bin/bash -ex
+
+if [ "$(id -u)" != 0 ];then
+  exec sudo --preserve-env=OP,GIT_REF,DISTRO "$0" "$@"
+fi
+
+OP=${OP:-package}
+GIT_REF=${GIT_REF:-master}
+
+SCRIPT_DIR="$(dirname "$(readlink -f "$BASH_SOURCE")")"
+
+declare -A DISTROS
+DISTROS=(
+    [centos]=centos.centos.rpm
+    [fedora]=fedora.fedora.rpm
+    [opensuse]=opensuse/leap.opensuse.rpm
+    [debian]=debian.debian.deb
+    [ubuntu]=ubuntu:disco.ubuntu.deb
+    [archlinux]=archlinux/base.archlinux.arch
+)
+
+cd "$SCRIPT_DIR"
+
+if [ -n "$DISTRO" ]; then
+    DVALUE=${DISTROS[$DISTRO]}
+    DISTROS=([$DISTRO]=$DVALUE)
+fi
+
+make -j all GIT_REF="$GIT_REF" OP="$OP" DISTROS="${DISTROS[*]}" CONTAINER=mantid

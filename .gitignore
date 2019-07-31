@@ -4,3 +4,4 @@ __pycache__
 mantid.1
 /debbuild
 /archbuild
+/batch-build/export
