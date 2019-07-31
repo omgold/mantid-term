@@ -10,6 +10,7 @@ RPM_NAME = $(shell rpm -q --qf %{NAME}-${VERSION} --specfile ${RPM_SPECFILE})
 RPM_NAME_RELEASE = $(shell rpm -q --qf %{NAME}-${VERSION}-%{RELEASE} --specfile ${RPM_SPECFILE})
 DEB_DISTRO_NAME = $(shell lsb_release -c -s)
 DEB_BUILD_DIR = debbuild/mantid-term_${VERSION}
+ARCH_BUILD_DIR = archbuild
 RPM_BUILD_DIR = rpmbuild
 
 
@@ -27,6 +28,17 @@ srpm:
 	tar --exclude=.git --exclude-caches-all -zcvf ${HOME}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz .
 	rpmbuild -bs ${HOME}/rpmbuild/SPECS/mantid-term.spec
 
+
+.PHONY: archpkg
+
+archpkg: ${ARCH_BUILD_DIR}/mantid-term.tar.gz
+	sed -re 's#__VERSION__#${VERSION}#' archpkg/PKGBUILD >${ARCH_BUILD_DIR}/PKGBUILD
+	cd ${ARCH_BUILD_DIR} && makepkg -f
+
+${ARCH_BUILD_DIR}/mantid-term.tar.gz:
+	mkdir -p ${ARCH_BUILD_DIR}
+	echo 'Signature: 8a477f597d28d172789f06886806bc55' >${ARCH_BUILD_DIR}/CACHEDIR.TAG
+	tar --transform='s/^./mantid-term/' --exclude=.git --exclude-caches-all -zcvf $@ .
 
 deb: ${DEB_BUILD_DIR}
 	cd ${DEB_BUILD_DIR} && dpkg-buildpackage -uc -us
