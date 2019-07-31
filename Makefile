@@ -10,8 +10,8 @@ RPM_NAME = $(shell rpm -q --qf %{NAME}-${VERSION} --specfile ${RPM_SPECFILE})
 RPM_NAME_RELEASE = $(shell rpm -q --qf %{NAME}-${VERSION}-%{RELEASE} --specfile ${RPM_SPECFILE})
 DEB_DISTRO_NAME = $(shell lsb_release -c -s)
 DEB_BUILD_DIR = debbuild/mantid-term_${VERSION}
-ARCH_BUILD_DIR = archbuild
-RPM_BUILD_DIR = rpmbuild
+ARCH_BUILD_DIR := archbuild
+RPM_BUILD_DIR := rpmbuild
 
 
 all: ${BUILD_DIR}/libmantid.so ${BUILD_DIR}/Mantid-1.0.typelib ${BUILD_DIR}/mantid.1
