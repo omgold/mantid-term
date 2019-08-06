@@ -75,5 +75,8 @@ make -C .. install DESTDIR=%{buildroot}
 #==============================================================
 
 %changelog
+* Tue Aug 06 2019 Oliver Mangold -> 1.0.1
+- Adding comments to non-trivial keybindings in example
+- Print warning and advice if config file is not found
 * Fri Jul 26 2019 Oliver Mangold -> 1.0
 - initial version
