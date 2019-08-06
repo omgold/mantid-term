@@ -1,3 +1,10 @@
+mantid-term (1.0.1-1) __DISTRO__; urgency=low
+
+  * Adding comments to non-trivial keybindings in example
+  * Print warning and advice if config file is not found
+
+ -- Oliver Mangold <omangold@gmail.com>  Tue, 06 Aug 2019 12:11:44 +0000
+
 mantid-term (1.0.0-1) __DISTRO__; urgency=medium
 
   * Initial release
