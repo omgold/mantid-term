@@ -80,10 +80,14 @@ keybindings:
         Down: {action: move, y: 1}
         <Ctrl>Up: {action: move, screen: -0.5}
         <Ctrl>Down: {action: move, screen: 0.5}
+        # to start of line
         Home: {action: move-regexp, regexp: ^, backward: true}
+        # to end of line
         End: {action: move-regexp, regexp: $}
+        # back to the last word
         <Ctrl>Left: {action: move-regexp, regexp: '^(\W|$)|\w+', backward: true}
         <Alt>Left:  {action: move-regexp, regexp: '^(\W|$)|\w+', backward: true}
+        # forward to end of the next word
         <Ctrl>Right: {action: move-regexp, regexp: '\w+|$', after: true}
         <Alt>Right:  {action: move-regexp, regexp: '\w+|$', after: true}
         <Ctrl>space: start-select
