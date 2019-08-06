@@ -913,6 +913,11 @@ class App:
                 print("config:",e, file=sys.stderr)
                 config_file = {}
         else:
+            print("""\
+warning: Config file could not be loaded.
+         You won't have any keybindings available.
+advice: Copy one of the examples in /usr/share/mantid to ~/.config/mantid.yml
+        and tweak it to your needs.""")
             config_file = {}
 
         for section_name, section in self.config.items():
