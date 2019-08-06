@@ -86,20 +86,29 @@ keybindings:
         <Ctrl>d: {action: move, screen: 0.5}
         <Ctrl>b: {action: move, screen: -1}
         <Ctrl>f: {action: move, screen: 1}
+        # to start of line
         Home: {action: move-regexp, regexp: ^, backward: true}
         '0': {action: move-regexp, regexp: ^, backward: true}
+        # to end of line
         End: {action: move-regexp, regexp: $}
         dollar: {action: move-regexp, regexp: $}
+        # back to after the leading whitespace of the line
         asciicircum: {action: move-regexp, regexp: '^\s*', backward: true, after: true}
+        # back to the start of the last word (word characters only)
         <Shift>Left: {action: move-regexp, regexp: '^(\W|$)|\w+', backward: true}
         b:           {action: move-regexp, regexp: '^(\W|$)|\w+', backward: true}
+        # forward to the next word (word characters only)
         <Shift>Right: {action: move-regexp, regexp: '\w+|$'}
         w:            {action: move-regexp, regexp: '\w+|$'}
+        # forward to after the next word (word characters only)
         e:            {action: move-regexp, regexp: '\w+|$', after: true}
+        # back to the start of he last word (all non-whitespace)
         <Ctrl>Left: {action: move-regexp, regexp: '^(\s|$)|\S+', backward: true}
         <Shift>b:   {action: move-regexp, regexp: '^(\s|$)|\S+', backward: true}
+        # forward to the next word (all non-whitespace)
         <Ctrl>Right: {action: move-regexp, regexp: '\S+|$'}
         <Shift>w:    {action: move-regexp, regexp: '\S+|$'}
+        # forward to after the next word (all non-whitespace)
         <Shift>e: {action: move-regexp, regexp: '\S+|$', after: true}
         v: start-select
         <Shift>v: {action: start-select, mode: line}
