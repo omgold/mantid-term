@@ -730,16 +730,28 @@ actions = {
 }
 
 css_appearance = {
-    "cursor-aspect-ratio": ("vte-terminal", "-GtkWidget-cursor-aspect-ratio"),
-    "padding": ("box", "padding"),
-    "scrollbar-padding": ("scrollbar.mantid>contents>trough>slider", "border-width"),
-    "scrollbar-width": ("scrollbar.mantid>contents>trough>slider", "min-width"),
+    "cursor-aspect-ratio": (("vte-terminal", "-GtkWidget-cursor-aspect-ratio"),),
+    "padding": (("box", "padding"),),
+    "scrollbar-padding": (
+        ("scrollbar.mantid>contents>trough>slider", "border-width"),
+        ("scrollbar.mantid>contents>trough>slider:backdrop", "border-width"),
+    ),
+    "scrollbar-width": (
+        ("scrollbar.mantid>contents>trough>slider", "min-width"),
+        ("scrollbar.mantid>contents>trough>slider:backdrop", "min-width"),
+    ),
 }
 
 css_colors = {
-    "padding": ("box", "background-color"),
-    "scrollbar": ("scrollbar.mantid>contents>trough>slider", "background-color"),
-    "scrollbar-background": ("scrollbar.mantid>contents", "background-color"),
+    "padding": (("box", "background-color"),),
+    "scrollbar": (
+        ("scrollbar.mantid>contents>trough>slider", "background-color"),
+        ("scrollbar.mantid>contents>trough>slider:backdrop", "background-color"),
+    ),
+    "scrollbar-background": (
+        ("scrollbar.mantid>contents", "background-color"),
+        ("scrollbar.mantid>contents:backdrop", "background-color"),
+    ),
 }
 
 
@@ -1028,27 +1040,29 @@ advice: Copy one of the examples in /usr/share/mantid to ~/.config/mantid.yml
 
         css = []
 
-        for name, dest in css_appearance.items():
-            value = appearance.get(name)
-            if value is None:
-                continue
-            if not css_validate(value):
-                print("appearance: %s value %s is not in valid format, skipping." %
-                      (name, value), file=sys.stderr)
-                continue
-            sel, attr = dest
-            entry = "%s { %s: %s; }" % (sel, attr, value)
-            css.append(entry)
+        for name, dests in css_appearance.items():
+            for dest in dests:
+                value = appearance.get(name)
+                if value is None:
+                    continue
+                if not css_validate(value):
+                    print("appearance: %s value %s is not in valid format, skipping." %
+                          (name, value), file=sys.stderr)
+                    continue
+                sel, attr = dest
+                entry = "%s { %s: %s; }" % (sel, attr, value)
+                css.append(entry)
 
         colors = self.colors
-        for name, dest in css_colors.items():
-            value = colors.get(name)
-            if value is None:
-                continue
-            value = "#%02x%02x%02x" % (int(value.red*255), int(value.green*255), int(value.blue*255))
-            sel, attr = dest
-            entry = "%s { %s: %s; }" % (sel, attr, value)
-            css.append(entry)
+        for name, dests in css_colors.items():
+            for dest in dests:
+                value = colors.get(name)
+                if value is None:
+                    continue
+                value = "#%02x%02x%02x" % (int(value.red*255), int(value.green*255), int(value.blue*255))
+                sel, attr = dest
+                entry = "%s { %s: %s; }" % (sel, attr, value)
+                css.append(entry)
 
         self.style.load_from_data("\n".join(css).encode("utf-8"))
 
