@@ -75,6 +75,9 @@ make -C .. install DESTDIR=%{buildroot}
 #==============================================================
 
 %changelog
+* Thu Sep 05 2019 Oliver Mangold -> 1.0.2
+- making scrollbar colors of inactive window same as for active one
+- fixing doc: scrollbar-padding actually is scrollbar-background
 * Tue Aug 06 2019 Oliver Mangold -> 1.0.1
 - Adding comments to non-trivial keybindings in example
 - Print warning and advice if config file is not found
