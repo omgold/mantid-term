@@ -160,7 +160,7 @@ options_doc = {
         "highlight-foreground": "color of selected text (unchanged when unset)",
         "padding": "color of padding around terminal",
         "scrollbar": "color of scrollbar",
-        "scrollbar-padding": "color of scrollbar background",
+        "scrollbar-background": "color of scrollbar background",
         "0-255": "palette colors of xterm-color (0-15) and xterm-256color (0-255)"
     },
 }
