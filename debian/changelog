@@ -1,3 +1,10 @@
+mantid-term (1.0.2-1) __DISTRO__; urgency=low
+
+  * making scrollbar colors of inactive window same as for active one
+  * fixing doc: scrollbar-padding actually is scrollbar-background
+
+ -- Oliver Mangold <omangold@gmail.com>  Thu, 05 Sep 2019 09:55:57 +0000
+
 mantid-term (1.0.1-1) __DISTRO__; urgency=low
 
   * Adding comments to non-trivial keybindings in example
