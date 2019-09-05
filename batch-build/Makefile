@@ -42,7 +42,8 @@ prepare:
 	        dnf -y install make git python3-devel rpm-build dnf-plugins-core; \
 	        ;; \
 	    centos) \
-	        yum -y install epel-release centos-release-scl make git python36-devel rpm-build yum-utils; \
+	        yum -y install epel-release; \
+	        yum -y install centos-release-scl make git python36-devel rpm-build yum-utils; \
 	        ;; \
 	    opensuse) \
 	        zypper --non-interactive install make git python3-devel rpm-build; \
