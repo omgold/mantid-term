@@ -302,7 +302,7 @@ class Terminal:
 
         _, self.pid = \
         self.vte.spawn_sync(Vte.PtyFlags.DEFAULT,
-                            None, # pwd
+                            app.work_dir, # pwd
                             cmd, # cmd
                             [ "%s=%s" % entry for entry in env.items()], # env
                             GLib.SpawnFlags.SEARCH_PATH, # spawn_flags
@@ -864,6 +864,9 @@ class App:
         self.is_fullscreen = False
 
         self.style = Gtk.CssProvider()
+
+        self.work_dir = self.args.pwd
+
 
     def setup(self):
         self.hint_overlay = Gtk.Overlay()
