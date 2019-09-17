@@ -75,6 +75,8 @@ make -C .. install DESTDIR=%{buildroot}
 #==============================================================
 
 %changelog
+* Tue Sep 17 2019 Oliver Mangold -> 1.0.4
+- transparent window background did not work, fixed (issue #1)
 * Sun Sep 15 2019 Oliver Mangold -> 1.0.3
 - option -d (working directory) did not work, fixed
 * Thu Sep 05 2019 Oliver Mangold -> 1.0.2
