@@ -1069,6 +1069,13 @@ advice: Copy one of the examples in /usr/share/mantid to ~/.config/mantid.yml
 
         self.style.load_from_data("\n".join(css).encode("utf-8"))
 
+        screen = self.window.get_screen()
+        visual = screen.get_rgba_visual()
+        if visual != None and screen.is_composited():
+            self.window.set_visual(visual)
+
+        self.window.set_app_paintable(True)
+
 
     def set_font_scale(self, scale):
         for term in self.terminals:
