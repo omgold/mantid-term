@@ -1,3 +1,9 @@
+mantid-term (1.0.3-1) __DISTRO__; urgency=low
+
+  * option -d (working directory) did not work, fixed
+
+ -- Oliver Mangold <omangold@gmail.com>  Sun, 15 Sep 2019 09:59:47 +0000
+
 mantid-term (1.0.2-1) __DISTRO__; urgency=low
 
   * making scrollbar colors of inactive window same as for active one
