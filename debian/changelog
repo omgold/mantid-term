@@ -1,3 +1,9 @@
+mantid-term (1.0.4-1) __DISTRO__; urgency=low
+
+  * transparent window background did not work, fixed (issue #1)
+
+ -- Oliver Mangold <omangold@gmail.com> Tue, 17 Sep 2019 12:33:29 +0000
+
 mantid-term (1.0.3-1) __DISTRO__; urgency=low
 
   * option -d (working directory) did not work, fixed
