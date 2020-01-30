@@ -1175,7 +1175,10 @@ def main():
 
     try:
         import prctl
-        prctl.set_proctitle("mantid")
+        if len(sys.argv) == 1:
+            prctl.set_proctitle("mantid")
+        else:
+            prctl.set_proctitle("mantid "+" ".join(sys.argv[1:]))
     except:
         pass
 
