@@ -1018,7 +1018,7 @@ advice: Copy one of the examples in /usr/share/mantid to ~/.config/mantid.yml
             role = startup["role"]
 
         if role is not None:
-            window.set_role(self.args.role)
+            self.window.set_role(self.args.role)
 
         shell = startup["shell"]
         if isinstance(shell, str):
