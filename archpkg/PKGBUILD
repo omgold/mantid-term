@@ -8,6 +8,7 @@ url="https://github.com/omgold/mantid-term/"
 license=('GPL2' 'GPL3')
 arch=('x86_64')
 depends=(gtk3 gnutls pcre2 python python-gobject gobject-introspection python-yaml)
+optdepends=(python-prctl)
 makedepends=(git libtool intltool gtk-doc scdoc pkg-config sed)
 source=("mantid-term.tar.gz")
 sha256sums=(SKIP)
