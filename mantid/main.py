@@ -1172,6 +1172,13 @@ advice: Copy one of the examples in /usr/share/mantid to ~/.config/mantid.yml
 
 def main():
 #if __name__ == "__main__":
+
+    try:
+        import prctl
+        prctl.set_proctitle("mantid")
+    except:
+        pass
+
     global app
     Gtk.init()
     app = App()
