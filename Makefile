@@ -83,16 +83,12 @@ ${BUILD_DIR}/Mantid-1.0.typelib: Mantid-1.0.gir ${BUILD_DIR}/CACHEDIR.TAG
 ${BUILD_DIR}/mantid.1: mantid/*.py ${BUILD_DIR}/Mantid-1.0.typelib ${BUILD_DIR}/libmantid.so
 	cd ${BUILD_DIR} && ${SOURCE_DIR}/gen-man
 
-${SOURCE_DIR}/vte-ng/configure:
-	NOCONFIGURE=1 ${SOURCE_DIR}/vte-ng/autogen.sh
-
-${BUILD_DIR}/vte-ng/Makefile: ${BUILD_DIR}/CACHEDIR.TAG ${SOURCE_DIR}/vte-ng/configure
+${BUILD_DIR}/vte-ng/build.ninja: ${BUILD_DIR}/CACHEDIR.TAG ${SOURCE_DIR}/vte-ng/meson.build ${SOURCE_DIR}/vte-ng/meson_options.txt
 	mkdir -p ${BUILD_DIR}/vte-ng
-	cd ${BUILD_DIR}/vte-ng && \
-	CC=${CC} CXX=${CXX} ${SOURCE_DIR}/vte-ng/configure --disable-static --disable-vala --disable-gtk-doc-html --with-gnutls --without-iconv --disable-glade --enable-introspection --prefix=/usr/lib/mantid
+	CC=${CC} CXX=${CXX} meson --prefix=/usr/lib/mantid ${BUILD_DIR}/vte-ng ${SOURCE_DIR}/vte-ng -Ddocs=false -Dgnutls=true -Diconv=false -Dgir=true -Dgtk4=false -Dvapi=false
 
-vte-ng: ${BUILD_DIR}/vte-ng/Makefile ${BUILD_DIR}/CACHEDIR.TAG
-	$(MAKE) -C ${BUILD_DIR}/vte-ng
+vte-ng: ${BUILD_DIR}/vte-ng/build.ninja ${BUILD_DIR}/CACHEDIR.TAG
+	ninja -C ${BUILD_DIR}/vte-ng
 	cp ${SOURCE_DIR}/vte-ng/src/vte/*.h ${BUILD_DIR}/vte-ng/src/vte/
 
 ${BUILD_DIR}/CACHEDIR.TAG:
